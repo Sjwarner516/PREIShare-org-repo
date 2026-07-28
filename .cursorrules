@@ -6,3 +6,7 @@
 - Style with Tailwind utilities plus CSS variables from `src/styles.css` (e.g. `--sea-ink`); keep the scaffold layout unless change is justified.
 - Isomorphic by default: use `createServerFn` / `createServerOnlyFn` / `createClientOnlyFn` for env boundaries. Secrets via `process.env` on server only; client config only as `VITE_*`.
 - Before Start/Router/Devtools edits: `npx @tanstack/intent@latest list` then `load` matching skills. Do not edit `src/routeTree.gen.ts` by hand.
+- Always use TypeScript with strict mode.
+- Follow existing component patterns in `src/components`.
+- Use the Supabase client from `lib/supabase.ts`.
+- Write tests for new features.
