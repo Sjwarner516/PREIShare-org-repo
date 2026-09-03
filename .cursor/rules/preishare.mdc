@@ -1,0 +1,47 @@
+---
+description: PREIshare agent rules — stack, safe edits, safety, and workflow
+alwaysApply: true
+---
+
+# PREIshare
+
+Grounded in `docs/onboarding/repo-map.md` and `docs/onboarding/team-orientation-notes.md`. Prefer smallest diffs. Do not invent scripts or folders not listed in the repo map.
+
+## Stack
+
+- Single package at repo root; app code in `src/` (not a monorepo).
+- TypeScript + TanStack Start + React; Vite toolchain; TanStack Router file routes under `src/routes/`.
+- Planned data layer: Supabase / PostgreSQL / pgvector — **not in the tree yet** (no `supabase/` folder, no migrations, no client package in `package.json` as of the map).
+- Existing scripts only: `dev`, `build`, `preview`, `generate-routes`.
+
+## Safe edit surfaces
+
+**Prefer (first contributions):** `docs/onboarding/`, other `docs/`, `README.md`.
+
+**Do not edit yet** (need a real task, tests/review as applicable):
+
+- `src/routeTree.gen.ts` (generated — never hand-edit)
+- `package-lock.json` / root dependency churn
+- `.cursorrules`, `AGENTS.md`, `tsconfig.json`, `vite.config.ts`
+- `.github/` when added; Supabase / migrations / production env when added
+- Auth, payments, or vector/search core if/when present
+
+## Coding conventions
+
+- Touch only what the task needs — no drive-by refactors or unrelated “while I was here” edits.
+- Routes: `src/routes/`; shared UI: `src/components/`; tokens/styles: `src/styles.css`; router factory: `src/router.tsx`.
+- Keep changes tiny and reviewable; first PRs are docs-scale, not multi-feature rewrites.
+- Do not invent new top-level folders, packages, or npm scripts unless the repo map (or a mentor task) already names them.
+
+## Secrets / safety
+
+- Never commit secrets, production credentials, or real customer data. `.env` is gitignored; do not paste secrets into agents or PRs.
+- When data/env appear later: no destructive SQL, no “fixing” live data without a mentor and a real task.
+- Treat failing automation checks as blockers when CI exists.
+
+## Agent workflow
+
+- Cycle: understand → plan → prompt → review → refine. Do not ship agent output you cannot explain.
+- Work on a feature branch (personal fork); open a PR to the team repo — do not push branches directly to the shared default branch.
+- Definition of done for a beginner PR: scoped, isolated, described, reviewable, self-verified, aligned with team conventions.
+- If a path claim in the repo map is wrong, update the map — do not silently invent a different layout.

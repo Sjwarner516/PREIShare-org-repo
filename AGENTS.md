@@ -9,94 +9,42 @@ Before editing files for a substantial task:
 - Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
 <!-- intent-skills:end -->
 
-# Project context
+# PREIshare — agent & contributor notes
 
-## Scaffold commands
+**Authoritative agent rules:** [`.cursor/rules/preishare.mdc`](.cursor/rules/preishare.mdc)  
+Humans and agents should follow that file for stack, safe edit surfaces, coding conventions, secrets/safety, and workflow. Keep this document consistent with it.
 
-Exact CLI used (initially created a nested folder, then merged into this repo root):
+## What PREIshare is
 
-```bash
-npx @tanstack/cli@latest create my-tanstack-app --agent --package-manager npm --tailwind
-```
+PREIshare helps people make better real-estate decisions by turning property and market data into clear intelligence. The engineering team ships that as a modern web app: a single package at the repo root with app code in `src/`. Stack: **TypeScript + TanStack Start + React**; Vite toolchain; TanStack Router file routes under `src/routes/`. Planned data layer: **Supabase / PostgreSQL / pgvector** (not in the tree yet). Existing scripts only: `dev`, `build`, `preview`, `generate-routes`.
 
-Notes from CLI:
-- `--tailwind` is deprecated/ignored; Tailwind is already enabled in the standard TanStack Start scaffold.
-- No partner add-ons were selected (`chosenAddOns: []`). Blank React Start starter only.
+## Onboarding docs
 
-Follow-up Intent commands (run from this repo root):
+Start here before changing code:
 
-```bash
-npx @tanstack/intent@latest install
-npx @tanstack/intent@latest list
-```
+- [`docs/onboarding/`](docs/onboarding/) — onboarding folder
+- [`docs/onboarding/repo-map.md`](docs/onboarding/repo-map.md) — repository map and safe vs do-not-edit paths
+- [`docs/onboarding/team-orientation-notes.md`](docs/onboarding/team-orientation-notes.md) — mission, PR workflow, first-PR definition of done
+- [`docs/onboarding/setup-log.md`](docs/onboarding/setup-log.md) — local setup notes
 
-Result: 9 intent-enabled packages, 31 skills (Start, Router, Devtools, Virtual File Routes).
+## Safe edit surfaces
 
-## Chosen stack
+**Prefer (first contributions):** `docs/onboarding/`, other `docs/`, `README.md`.
 
-| Choice | Value |
-|--------|--------|
-| Framework | React 19 + TanStack Start |
-| Starter | Blank / default file-router preset |
-| Package manager | npm |
-| Styling | Tailwind CSS v4 (`@tailwindcss/vite`) |
-| Toolchain | Vite 8 + TypeScript (default CLI toolchain) |
-| Router | TanStack Router file-based routes (`src/routes`) |
-| Integrations / add-ons | None |
+**Do not edit yet** (need a real task, tests/review as applicable) — same list as the rules file:
 
-## Layout (preserve unless there is a clear reason to change)
+- `src/routeTree.gen.ts` (generated — never hand-edit)
+- `package-lock.json` / root dependency churn
+- `.cursorrules`, `AGENTS.md`, `tsconfig.json`, `vite.config.ts`
+- `.github/` when added; Supabase / migrations / production env when added
+- Auth, payments, or vector/search core if/when present
 
-- `src/routes/` — file routes (`__root.tsx`, `index.tsx`, `about.tsx`)
-- `src/router.tsx` — router factory
-- `src/components/` — Header, Footer, ThemeToggle
-- `src/styles.css` — Tailwind entry
-- `vite.config.ts` — `devtools()`, `tailwindcss()`, `tanstackStart()`, `viteReact()`
-- `tsr.config.json` — route generation config
-- `.cta.json` — scaffold metadata
+## Safety boundaries
 
-Package name in `package.json` is `preishare-org-repo` (repo root). App lives at the repository root, not under `my-tanstack-app/`.
-
-## Environment variables
-
-None required for the blank scaffold.
-
-When adding secrets or config later (from `@tanstack/start-client-core#start-core/execution-model`):
-- **Server-only:** read `process.env.MY_SECRET` inside handlers / `createServerFn` / per-request code — never at module scope, never with a `VITE_` prefix.
-- **Client-exposed:** only `VITE_*` via `import.meta.env.VITE_*`.
-- Do not put secrets in `VITE_*` variables (they ship in the client bundle).
-- `.env` is gitignored.
-
-## Scripts
-
-```bash
-npm install
-npm run dev      # Vite on port 3000
-npm run build
-npm run preview
-npm run generate-routes
-```
-
-## Deployment notes
-
-Blank scaffold has no host-specific adapter yet. TanStack Start deploys via Vite + Nitro (see `npx @tanstack/intent@latest load @tanstack/start-client-core#start-core/deployment`). Typical next step for Vercel/Node/Railway is adding the Nitro Vite plugin when you are ready to deploy.
-
-## Architectural decisions
-
-- Keep the generated structure; prefer Intent skills over guessing Start/Router APIs.
-- Isomorphic-by-default: use `createServerFn` / `createServerOnlyFn` / `createClientOnlyFn` for environment boundaries.
-- No auth, DB, or partner integrations in this blank app.
-
-## Known gotchas
-
-- CLI `--tailwind` flag is ignored (Tailwind is on by default).
-- Nested `my-tanstack-app/` from the create command was flattened into this repo root on purpose.
-- `intent install` keeps a short skill-loading block at the top of this file; durable project notes live below it.
-- Future Intent versions may require an explicit `intent.skills` allowlist.
-
-## Next steps
-
-1. `npm run dev` and open http://localhost:3000
-2. Add routes under `src/routes/` as needed
-3. Load matching Intent skills before Start/Router/Devtools changes
-4. When deploying, load the deployment skill and add the appropriate Nitro/host preset
-5. Add `.env` / typed env declarations only when real config is introduced
+- Prefer **smallest diffs**. No drive-by refactors or unrelated “while I was here” edits.
+- Never commit secrets, production credentials, or real customer data. `.env` is gitignored; do not paste secrets into agents or PRs.
+- When data/env appear later: no destructive SQL, no “fixing” live data without a mentor and a real task.
+- Do not invent scripts or folders not listed in the repo map.
+- Treat failing automation checks as blockers when CI exists.
+- Work on a feature branch (personal fork); PR to the team repo — do not push directly to the shared default branch.
+- Do not ship agent output you cannot explain. Cycle: understand → plan → prompt → review → refine.
