@@ -14,6 +14,12 @@ Before editing files for a substantial task:
 **Authoritative agent rules:** [`.cursor/rules/preishare.mdc`](.cursor/rules/preishare.mdc)  
 Humans and agents should follow that file for stack, safe edit surfaces, coding conventions, secrets/safety, and workflow. Keep this document consistent with it.
 
+### Grounding obligations
+
+1. Use the project rules file and this `AGENTS.md` (plus linked onboarding docs) before changing code or asserting layout.
+2. When claiming where something lives, cite concrete paths or file names from this repo (e.g. `src/routes/`, `src/router.tsx`) — not a generic framework layout.
+3. If unsure, say **I don’t know** instead of guessing (e.g. inventing Next.js/`app/`, Prisma, `packages/`, or `apps/`).
+
 ## What PREIshare is
 
 PREIshare helps people make better real-estate decisions by turning property and market data into clear intelligence. The engineering team ships that as a modern web app: a single package at the repo root with app code in `src/`. Stack: **TypeScript + TanStack Start + React**; Vite toolchain; TanStack Router file routes under `src/routes/`. Planned data layer: **Supabase / PostgreSQL / pgvector** (not in the tree yet). Existing scripts only: `dev`, `build`, `preview`, `generate-routes`.

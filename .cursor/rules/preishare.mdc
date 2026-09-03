@@ -7,6 +7,12 @@ alwaysApply: true
 
 Grounded in `docs/onboarding/repo-map.md` and `docs/onboarding/team-orientation-notes.md`. Prefer smallest diffs. Do not invent scripts or folders not listed in the repo map.
 
+## Grounding obligations
+
+1. Follow this rules file and root `AGENTS.md` (and linked onboarding docs) before changing code or asserting layout.
+2. When claiming where something lives, cite concrete paths or file names from this repo (e.g. `src/routes/`, `src/router.tsx`) — not a generic framework layout.
+3. If unsure, say **I don’t know** instead of guessing (e.g. inventing Next.js/`app/`, Prisma, `packages/`, or `apps/`).
+
 ## Stack
 
 - Single package at repo root; app code in `src/` (not a monorepo).
