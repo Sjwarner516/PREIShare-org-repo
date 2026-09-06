@@ -69,6 +69,7 @@
 | `docs: align PR description test plan with the three-file diff` (`087c3c2`) | `docs/onboarding/pr-description.md` | 1, 2 |
 | `docs: clarify plan.md is not in the first-PR diff` (`9edf318`) | `docs/onboarding/first-contribution-notes.md` | 3 |
 | `docs: record simulated mentor review decisions` (`ddecb9c`) | `docs/onboarding/review-response-notes.md`, `docs/onboarding/pr-description.md`, `docs/onboarding/first-contribution-notes.md` | scaffold / step 5 |
+| `docs: correct review-response commit SHA in the notes table` (`a58aa38`) | `docs/onboarding/review-response-notes.md` | evidence hygiene |
 
 No second PR. All commits are on `docs/first-contribution-sydni-pr` so #5 updates in place.
 
