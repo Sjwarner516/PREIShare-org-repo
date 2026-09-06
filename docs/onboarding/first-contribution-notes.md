@@ -25,7 +25,8 @@
 - Records the three agent cycles, what was accepted or reshaped, and which paths stayed out of scope
 
 ## Final diff summary
-- Paths changed: `CONTRIBUTORS.md`, `docs/onboarding/pr-description.md`, `docs/onboarding/first-contribution-notes.md`, `docs/onboarding/first-contribution-plan.md` (planning step on the fat feature branch)
+- Paths on PR #5 (`docs/first-contribution-sydni-pr`): `CONTRIBUTORS.md`, `docs/onboarding/pr-description.md`, `docs/onboarding/first-contribution-notes.md`
+- Paths **not** in this PR: `docs/onboarding/first-contribution-plan.md` lives only on the fatter `docs/first-contribution-sydni` branch. A reviewer of #5 should not expect it in Files changed.
 - Paths intentionally NOT changed: README, `package.json`, lockfiles, `src/`, AGENTS.md, Cursor rules — Cycle 1 asked to reject those if the agent proposed them; the agent did not propose them
 
 ## Acceptance criteria checklist (from plan)
