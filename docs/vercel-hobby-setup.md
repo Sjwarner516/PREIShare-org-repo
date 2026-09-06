@@ -13,7 +13,7 @@
 | Preview URLs | Do **not** submit these to Canvas |
 
 Vercel project (dashboard): `https://vercel.com/sjwarner516s-projects/prei-share-org-repo`  
-GitHub Production environment is wired; `vercel[bot]` marked commit `9d51f59` (Nitro hosting) as **Deployment has completed**.
+One Hobby project: `prei-share-org-repo`. Standard Deployment Protection (Vercel Authentication) is **off**, so the Production alias is public.
 
 ## Hobby constraints I will keep
 
@@ -24,5 +24,5 @@ GitHub Production environment is wired; `vercel[bot]` marked commit `9d51f59` (N
 
 ## First production deploy
 
-- Status: Ready (GitHub status context `Vercel` = success on `main` @ `9d51f59`)
-- Incognito check of Production URL: fail — the Production alias responds, but Vercel Deployment Protection sends an unauthenticated browser to `vercel.com/login` instead of the public app. A teammate should turn Standard Protection off (or add a public bypass) if Canvas needs a no-login URL.
+- Status: Ready (GitHub status context `Vercel` = success; anonymous GET of the Production URL returns HTTP 200 and `<title>TanStack Start Starter</title>`, not `vercel.com/login`)
+- Incognito check of Production URL: pass
