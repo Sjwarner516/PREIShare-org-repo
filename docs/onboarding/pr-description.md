@@ -18,13 +18,15 @@ without touching product runtime code.
 ## Approach
 - Added Sydni Warner (`Sjwarner516`, Onboarding engineer, onboarded 2026-09-06) to `CONTRIBUTORS.md`.
 - Recorded this reviewer checklist in `docs/onboarding/pr-description.md`.
+- Recorded agent-cycle decisions in `docs/onboarding/first-contribution-notes.md`.
 - No app, package, or config files changed.
 - Opened a cross-fork PR from `docs/first-contribution-sydni-pr` on the fork into team `main`.
 
 ## What reviewers should look at
 - [ ] `CONTRIBUTORS.md` — new row is accurate (Sydni Warner / Sjwarner516 / Onboarding engineer / 2026-09-06), formatted as a table, and free of secrets
 - [ ] `docs/onboarding/pr-description.md` — problem, approach, test plan, and checklist are filled in (no placeholders)
-- [ ] Diff stays docs-only: `CONTRIBUTORS.md` and `docs/onboarding/pr-description.md`
+- [ ] `docs/onboarding/first-contribution-notes.md` — Cycle 1–3 accept / reshape / reject notes match the diff
+- [ ] Diff stays docs-only: `CONTRIBUTORS.md`, `docs/onboarding/pr-description.md`, `docs/onboarding/first-contribution-notes.md`, and `docs/onboarding/review-response-notes.md`
 - [ ] Commit messages explain why this onboarding change exists
 
 ## Test plan
@@ -33,10 +35,12 @@ A reviewer can do all of this on GitHub without cloning.
 1. Open **Files changed** and confirm only these paths appear:
    - `CONTRIBUTORS.md`
    - `docs/onboarding/pr-description.md`
+   - `docs/onboarding/first-contribution-notes.md`
+   - `docs/onboarding/review-response-notes.md`
 2. Skim the contributors table: name, GitHub handle, role, and date look correct.
-3. Confirm this file has a live PR URL, a specific title, and a test plan.
+3. Confirm this file has a live PR URL, a specific title, and a test plan that lists every path in Files changed.
 4. Search the diff for tokens, passwords, or private keys — expect none.
-5. (Optional) Check out `docs/first-contribution-sydni-pr` and preview both Markdown files.
+5. (Optional) Check out `docs/first-contribution-sydni-pr` and preview the Markdown files.
 
 ## Screenshots / notes
 No UI screenshots (docs-only change).
