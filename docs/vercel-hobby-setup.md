@@ -26,3 +26,9 @@ One Hobby project: `prei-share-org-repo`. Standard Deployment Protection (Vercel
 
 - Status: Ready (GitHub status context `Vercel` = success; anonymous GET of the Production URL returns HTTP 200 and `<title>TanStack Start Starter</title>`, not `vercel.com/login`)
 - Incognito check of Production URL: pass
+
+## Reflection
+
+This sprint I stood up a safe path onto the PREIshare team: fork + `origin`/`upstream`, a scoped first PR (`CONTRIBUTORS.md` and onboarding docs on `docs/first-contribution-sydni-pr` → team `main`), and one Hobby Vercel project that deploys `main` to a **public** Production URL.
+
+Concepts I actually used: keep the first change docs-only and reviewable; write Test plans that match Files changed; accept in-scope review comments and decline scope creep; add Nitro so TanStack Start has a server target (a successful Vite build is not enough on Vercel); and turn off Standard Deployment Protection so incognito visitors see the starter app, not `vercel.com/login`. I did not ship an investor feature, a database, or paid Vercel add-ons.
