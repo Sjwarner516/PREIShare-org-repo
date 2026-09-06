@@ -26,7 +26,7 @@ without touching product runtime code.
 - [ ] `CONTRIBUTORS.md` — new row is accurate (Sydni Warner / Sjwarner516 / Onboarding engineer / 2026-09-06), formatted as a table, and free of secrets
 - [ ] `docs/onboarding/pr-description.md` — problem, approach, test plan, and checklist are filled in (no placeholders)
 - [ ] `docs/onboarding/first-contribution-notes.md` — Cycle 1–3 accept / reshape / reject notes match the diff
-- [ ] Diff stays docs-only: `CONTRIBUTORS.md`, `docs/onboarding/pr-description.md`, `docs/onboarding/first-contribution-notes.md`, and `docs/onboarding/review-response-notes.md`
+- [ ] Diff stays docs-only: `CONTRIBUTORS.md`, `docs/onboarding/pr-description.md`, `docs/onboarding/first-contribution-notes.md`, `docs/onboarding/review-response-notes.md`, and `docs/onboarding/onboarding-handoff.md`
 - [ ] Commit messages explain why this onboarding change exists
 
 ## Test plan
@@ -37,6 +37,7 @@ A reviewer can do all of this on GitHub without cloning.
    - `docs/onboarding/pr-description.md`
    - `docs/onboarding/first-contribution-notes.md`
    - `docs/onboarding/review-response-notes.md`
+   - `docs/onboarding/onboarding-handoff.md`
 2. Skim the contributors table: name, GitHub handle, role, and date look correct.
 3. Confirm this file has a live PR URL, a specific title, and a test plan that lists every path in Files changed.
 4. Search the diff for tokens, passwords, or private keys — expect none.
