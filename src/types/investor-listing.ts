@@ -10,16 +10,12 @@ export interface InvestorListing {
   /** Short public headline shown in search results and cards. */
   title: string;
 
-  /**
-   * Longer plain-text description of the investment opportunity
-   * (inventory field: description).
-   */
+  /** Longer plain-text description of the investment opportunity. */
   summary: string;
 
   /**
    * Asking price in whole US dollars (no currency symbol).
    * Example: 450000 means $450,000.
-   * Deferred nested home: financials.askingPrice.
    */
   askingPrice: number;
 
