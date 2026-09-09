@@ -15,8 +15,8 @@ listing is investor-visible.
 
 ## What belongs here
 - Domain type modules only (listing, address, status, contacts, etc.) — **not yet**.
-  This step only tracks the empty folder. `InvestorListing` and other type
-  modules come in later steps.
+  This step only tracks the folder via `.gitkeep`. `InvestorListing` and other
+  type modules come in later steps.
 - No UI components, no API route handlers, no database clients
 
 ## How to check types
