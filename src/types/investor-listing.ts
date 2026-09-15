@@ -30,9 +30,6 @@ export interface InvestorListingBase {
   /** Optional nested money summary; draft metrics can arrive later. */
   financialSummary?: FinancialSummary;
 
-  /** People or firms investors can reach; structured objects, not name strings. */
-  contacts: InvestorContact[];
-
   /**
    * Must match InvestorContact.id of one entry in contacts.
    * Runtime code will verify membership; TypeScript cannot prove the id exists in the array.
@@ -46,14 +43,26 @@ export interface InvestorListingBase {
 /**
  * Discriminated union: TypeScript uses `status` to know which shape you have.
  * closedAt is required only when status is "sold" (PREIshare's closed deal).
+ * Investor-visible statuses (published, under_offer, sold) need at least one contact.
+ * Draft and archived may have an empty contacts list.
  */
 export type InvestorListing =
   | (InvestorListingBase & {
-      status: "draft" | "published" | "under_offer" | "archived";
+      status: "draft" | "archived";
+      /** Editors may save with nobody listed yet. */
+      contacts: InvestorContact[];
+      closedAt?: undefined;
+    })
+  | (InvestorListingBase & {
+      status: "published" | "under_offer";
+      /** Tuple form means "at least one contact" — investors need someone to reach. */
+      contacts: [InvestorContact, ...InvestorContact[]];
       closedAt?: undefined;
     })
   | (InvestorListingBase & {
       status: "sold";
+      /** Tuple form means "at least one contact" — investors need someone to reach. */
+      contacts: [InvestorContact, ...InvestorContact[]];
       closedAt: string;
     });
 
