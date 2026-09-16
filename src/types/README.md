@@ -14,28 +14,38 @@ one screen). These types catch those mistakes at **compile time**—before a
 listing is investor-visible.
 
 ## What belongs here
-- Domain type modules only (listing, address, status, contacts, etc.) — **not yet**.
-  This step only tracks the folder via `.gitkeep`. `InvestorListing` and other
-  type modules come in later steps.
+- Domain type modules: `InvestorListing` (`investor-listing.ts`) plus nested
+  modules for `ListingStatus`, `PropertyType`, `Address`, `FinancialSummary`,
+  `InvestorContact` / `ContactRole`, and `Ownership`
+- Public re-exports in `index.ts` (the barrel teammates should import from)
 - No UI components, no API route handlers, no database clients
 
-## How to check types
+## Typecheck
 From the project root after `npm install`:
 
 ```bash
 npm run typecheck
 ```
 
-That runs `tsc --noEmit`: TypeScript checks files under `src/` and reports
-errors without writing JavaScript output files.
+- **Success:** no type errors, exit code `0`
+- The script is `tsc --noEmit`: TypeScript checks types only and does not write JavaScript
+- **Valid sources** that must pass: `src/types/**` and `src/fixtures/sample-investor-listings.ts`
+- **Intentional bad examples:** `src/fixtures/invalid-listings.errors.ts` (documented in
+  `docs/type-safety/expected-type-errors.md`). That file is listed in `tsconfig.json`
+  `exclude` so it does not break the clean gate.
 
 ## Strict mode (plain language)
 `strict: true` in `tsconfig.json` turns on the checker’s safest rules. It
 refuses accidental `any`, forgotten null checks, and objects that are missing
-required properties. That is what PREIshare needs: a missing price or a
-misspelled status fails at compile time instead of on a live listing.
+required properties. Extra flags such as `noUncheckedIndexedAccess` treat
+`list[0]` as possibly missing, so you cannot pretend a contact or price exists
+when the array or object might be empty.
+
+That is what PREIshare needs: a missing price or a misspelled status fails at
+compile time instead of on a live listing.
 
 ## Source of truth
 Business vocabulary and field rules come from:
 `docs/domain/investor-listing-domain-brief.md`
 (and the field inventory at `docs/domain/listing-field-inventory.md`).
+A beginner verification pass lives at `docs/type-safety/verification-checklist.md`.
