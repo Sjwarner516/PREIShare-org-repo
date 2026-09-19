@@ -1,5 +1,5 @@
 {
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["src", "app.config.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["src/fixtures/invalid-listings.errors.ts"],
   "compilerOptions": {
     "target": "ES2022",
