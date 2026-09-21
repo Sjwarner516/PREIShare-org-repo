@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -13,9 +13,8 @@ function HomePage() {
       <p className="mb-4 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
         Investor dashboard shell — starter home route.
       </p>
-      <p className="max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
-        Dashboard areas (Home, Portfolio, Deals, Profile) will be added in a
-        later step. This page is only the TanStack Start starter.
+      <p>
+        <Link to="/dashboard">Open investor dashboard</Link>
       </p>
     </main>
   )
