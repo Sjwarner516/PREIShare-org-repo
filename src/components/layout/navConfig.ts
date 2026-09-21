@@ -48,3 +48,7 @@ export function getPageTitle(pathname: string): string {
 
   return prefixMatch?.title ?? 'Dashboard overview'
 }
+
+export function pageTitleForPathname(pathname: string): string {
+  return getPageTitle(pathname)
+}

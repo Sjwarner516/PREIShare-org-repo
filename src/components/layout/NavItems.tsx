@@ -11,6 +11,8 @@ export function headerTitleFromPath(pathname: string): string {
   return getPageTitle(pathname)
 }
 
+export { getPageTitle }
+
 function isNavItemActive(pathname: string, path: string): boolean {
   if (path === '/dashboard') {
     return pathname === '/dashboard' || pathname === '/dashboard/'
