@@ -1,5 +1,15 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { dashboardNavItems } from './navConfig'
+import { dashboardNavItems, getPageTitle } from './navConfig'
+
+/** Sidebar renders <NavItems /> — the only destination list. */
+export function SidebarNav() {
+  return <NavItems />
+}
+
+/** Header heading: getPageTitle(pathname) for the active nav item. */
+export function headerTitleFromPath(pathname: string): string {
+  return getPageTitle(pathname)
+}
 
 function isNavItemActive(pathname: string, path: string): boolean {
   if (path === '/dashboard') {

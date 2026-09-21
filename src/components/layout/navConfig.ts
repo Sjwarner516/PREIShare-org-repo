@@ -1,3 +1,11 @@
+/**
+ * Single source of truth for investor-facing nav labels, paths, and titles.
+ *
+ * Wiring (required by the dashboard shell):
+ * - Sidebar renders <NavItems /> so it is the only destination list.
+ * - Header calls getPageTitle(pathname) so the heading matches the active item.
+ */
+
 export type NavItemConfig = {
   label: string
   path: string
