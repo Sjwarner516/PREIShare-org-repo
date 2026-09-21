@@ -12,6 +12,7 @@ export function Header({ title, children }: HeaderProps) {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
+  // Heading matches the active nav item via getPageTitle(pathname).
   const resolvedTitle = title ?? getPageTitle(pathname)
 
   return (

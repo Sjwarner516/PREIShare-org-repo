@@ -15,6 +15,7 @@ export function Sidebar({ brandLabel = 'PREIshare', children }: SidebarProps) {
       style={{ padding: '1.5rem 1.25rem', gap: '1rem' }}
     >
       <div className="sidebar-brand">{brandLabel}</div>
+      {/* Only destination list: <NavItems /> from navConfig */}
       <NavItems />
       {children}
     </aside>
