@@ -11,7 +11,10 @@ export function Header({
   children,
 }: HeaderProps) {
   return (
-    <header className="dashboard-header">
+    <header
+      className="dashboard-header"
+      style={{ padding: '1.25rem 1.75rem', gap: '1rem' }}
+    >
       <h1 className="header-title">{title}</h1>
       <div className="header-actions">{children}</div>
     </header>
