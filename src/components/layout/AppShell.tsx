@@ -21,10 +21,7 @@ type AppShellProps = {
  *   )
  * Portfolio, Deals, and Profile then render inside the same frame.
  */
-export function AppShell({
-  title = 'Investor Dashboard',
-  children,
-}: AppShellProps) {
+export function AppShell({ title, children }: AppShellProps) {
   return (
     <div className="app-shell" data-area="dashboard-layout">
       <Sidebar />
@@ -45,7 +42,7 @@ export function AppShell({
 /** Dashboard layout route: wrap the nested-route Outlet in AppShell. */
 export function DashboardLayout() {
   return (
-    <AppShell title="Investor Dashboard">
+    <AppShell>
       <Outlet />
     </AppShell>
   )

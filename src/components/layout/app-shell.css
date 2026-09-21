@@ -40,6 +40,14 @@
   text-decoration: underline;
 }
 
+.nav-link-active {
+  font-weight: 700;
+  text-decoration: underline;
+  background: rgba(238, 246, 241, 0.14);
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.4rem;
+}
+
 .app-shell-main-column {
   display: flex;
   flex: 1;
