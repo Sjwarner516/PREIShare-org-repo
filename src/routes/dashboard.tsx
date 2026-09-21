@@ -8,7 +8,6 @@ export const Route = createFileRoute('/dashboard')({
 function DashboardLayout() {
   return (
     <AppShell title="Investor Dashboard">
-      {/* Nested pages — Portfolio, Deals, and Profile — render inside AppShell */}
       <Outlet />
     </AppShell>
   )

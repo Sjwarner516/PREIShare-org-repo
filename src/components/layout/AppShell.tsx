@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Outlet } from '@tanstack/react-router'
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
 import './app-shell.css'
@@ -10,8 +11,15 @@ type AppShellProps = {
 
 /**
  * Shared investor chrome: sidebar + header + main content region.
- * The dashboard layout route passes its outlet as `children` so
- * Portfolio, Deals, and Profile render inside this same frame.
+ *
+ * src/routes/dashboard.tsx wires nested pages like this:
+ *   import { AppShell } from '../components/layout/AppShell'
+ *   return (
+ *     <AppShell title="Investor Dashboard">
+ *       <Outlet />
+ *     </AppShell>
+ *   )
+ * Portfolio, Deals, and Profile then render inside the same frame.
  */
 export function AppShell({
   title = 'Investor Dashboard',
@@ -31,5 +39,14 @@ export function AppShell({
         </main>
       </div>
     </div>
+  )
+}
+
+/** Dashboard layout route: wrap the nested-route Outlet in AppShell. */
+export function DashboardLayout() {
+  return (
+    <AppShell title="Investor Dashboard">
+      <Outlet />
+    </AppShell>
   )
 }
