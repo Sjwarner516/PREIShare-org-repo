@@ -103,3 +103,104 @@
   font-size: 0.9rem;
   color: #3d5248;
 }
+
+.dashboard-panel {
+  padding: 1.1rem 1.2rem;
+  border: 1px solid #d5e0da;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.dashboard-panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+}
+
+.empty-state {
+  margin: 0;
+  color: #3d5248;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrap th,
+.table-wrap td {
+  padding: 0.6rem 0.5rem;
+  text-align: left;
+  border-top: 1px solid #e4ece7;
+}
+
+.table-wrap th {
+  font-size: 0.85rem;
+  color: #3d5248;
+}
+
+.deals-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deal-card {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-top: 1px solid #e4ece7;
+}
+
+.deal-card h3,
+.deal-card p {
+  margin: 0;
+}
+
+.deal-card h3 {
+  font-size: 1rem;
+}
+
+.status {
+  margin: 0;
+  font-weight: 700;
+}
+
+.status-open {
+  color: #1f6b45;
+}
+
+.status-closing-soon {
+  color: #8a5a00;
+}
+
+.status-waitlist {
+  color: #3d5248;
+}
+
+.profile-card__fields {
+  margin: 0;
+}
+
+.profile-card__fields div {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-top: 1px solid #e4ece7;
+}
+
+.profile-card__fields dt {
+  margin: 0;
+  color: #3d5248;
+  font-weight: 600;
+}
+
+.profile-card__fields dd {
+  margin: 0;
+}
