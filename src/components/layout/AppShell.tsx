@@ -24,7 +24,9 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div
-      className={navOpen ? 'app-shell dash-shell nav-open' : 'app-shell dash-shell'}
+      className={
+        navOpen ? 'app-shell dash-shell nav-open' : 'app-shell dash-shell'
+      }
       data-area="dashboard-layout"
     >
       <Sidebar id={SIDEBAR_ID} />

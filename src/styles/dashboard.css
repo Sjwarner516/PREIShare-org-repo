@@ -1,21 +1,7 @@
-/*
-  How this file loads (do not remove — the app imports it):
-  import dashboardCss from '../styles/dashboard.css?url'
-  import '../../styles/dashboard.css'
-
-  Header Menu button (toggles .nav-open on .dash-shell):
-  <button type="button" class="dash-menu-toggle"
-    aria-label="Open navigation"
-    aria-expanded="false"
-    aria-controls="investor-sidebar">
-    <span aria-hidden="true">☰</span>
-    Menu
-  </button>
-
-  Tables: wrap with class "table-wrap dash-table-wrap"
+/* src/styles/dashboard.css
+   Shared responsive + accessibility polish for the PREIshare investor shell.
+   Import this from the root layout or global stylesheet your scaffold already uses.
 */
-
-/* Shared responsive + accessibility polish for the PREIshare investor shell. */
 
 :root {
   --dash-sidebar-width: 16rem;
@@ -53,6 +39,7 @@
   display: flex;
   align-items: center;
   gap: var(--dash-gap);
+  padding: 0.75rem 1rem;
 }
 
 .dash-content,

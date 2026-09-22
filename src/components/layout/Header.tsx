@@ -10,7 +10,7 @@ type HeaderProps = {
   sidebarId?: string
 }
 
-/** Top bar: page title from navConfig for the current route. */
+/** Top bar: page title from navConfig plus a real mobile Menu button. */
 export function Header({
   children,
   navOpen = false,
@@ -26,9 +26,9 @@ export function Header({
       <button
         type="button"
         className="dash-menu-toggle"
+        aria-label="Open navigation"
         aria-expanded={navOpen}
         aria-controls={sidebarId}
-        aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
         onClick={onToggleNav}
       >
         <span aria-hidden="true">☰</span>
