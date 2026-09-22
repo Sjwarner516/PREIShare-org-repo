@@ -180,7 +180,8 @@
 }
 
 .dash-menu-toggle[aria-label="Open navigation"],
-.dash-menu-toggle[aria-expanded][aria-controls] {
+.dash-menu-toggle[aria-expanded][aria-controls],
+#dash-menu-toggle[aria-label="Open navigation"] {
   cursor: pointer;
 }
 

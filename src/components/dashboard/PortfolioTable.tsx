@@ -42,7 +42,7 @@ export function PortfolioTable({
   isSampleData = true,
 }: PortfolioTableProps) {
   return (
-    <section className="dashboard-panel" aria-label="Portfolio holdings">
+    <section className="dashboard-panel" aria-label="Portfolio holdings" data-table-wrap="dash-table-wrap">
       <div className="panel-heading">
         <h2>
           <span className="panel-heading-icon" aria-hidden="true">

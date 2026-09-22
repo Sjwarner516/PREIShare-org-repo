@@ -38,6 +38,7 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: dashboardCss,
         title: 'PREIshare dashboard styles',
+        type: 'text/css',
       },
     ],
   }),

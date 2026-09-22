@@ -32,6 +32,7 @@ export function Header({
     <header className="dashboard-header dash-header" data-shell="header" data-menu="open-navigation">
       <button
         type="button"
+        id="dash-menu-toggle"
         className="dash-menu-toggle"
         aria-label="Open navigation"
         aria-expanded={navOpen}
@@ -76,6 +77,7 @@ export function Sidebar({
       data-nav-open={navOpen ? 'true' : 'false'}
       data-shell="sidebar"
       data-landmark="navigation"
+      data-css="dashboard.css"
     >
       <div className="sidebar-brand-row">
         <div className="sidebar-brand">
@@ -136,6 +138,7 @@ export function AppShell({ children }: AppShellProps) {
       className={shellClassName}
       data-area="dashboard-layout"
       data-nav-open={navOpen}
+      data-css="dashboard.css"
     >
       <a href="#main-content" className="skip-link">
         Skip to main content

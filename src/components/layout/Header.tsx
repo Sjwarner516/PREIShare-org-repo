@@ -24,6 +24,7 @@ export function Header({
     <header className="dashboard-header dash-header" data-shell="header" data-menu="open-navigation">
       <button
         type="button"
+        id="dash-menu-toggle"
         className="dash-menu-toggle"
         aria-label="Open navigation"
         aria-expanded={navOpen}

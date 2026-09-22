@@ -24,6 +24,7 @@ export function Sidebar({
       data-nav-open={navOpen ? 'true' : 'false'}
       data-shell="sidebar"
       data-landmark="navigation"
+      data-css="dashboard.css"
     >
       <div className="sidebar-brand-row">
         <div className="sidebar-brand">

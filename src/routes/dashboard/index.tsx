@@ -11,7 +11,7 @@ export const Route = createFileRoute('/dashboard/')({
 
 function DashboardHomePage() {
   return (
-    <div className="dashboard-home">
+    <div className="dashboard-home dash-home">
       <p className="sample-data-banner" role="note">
         Demo shell — all figures are placeholders, not live accounts
       </p>

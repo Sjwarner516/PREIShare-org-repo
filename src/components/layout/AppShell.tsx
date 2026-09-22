@@ -44,6 +44,7 @@ export function AppShell({ children }: AppShellProps) {
       className={shellClassName}
       data-area="dashboard-layout"
       data-nav-open={navOpen}
+      data-css="dashboard.css"
     >
       <a href="#main-content" className="skip-link">
         Skip to main content

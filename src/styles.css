@@ -538,3 +538,7 @@ a {
   z-index: 1;
 }
 
+#dash-menu-toggle {
+  font: inherit;
+}
+
