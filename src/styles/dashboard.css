@@ -1,0 +1,145 @@
+/* Shared responsive + accessibility polish for the PREIshare investor shell. */
+
+:root {
+  --dash-sidebar-width: 16rem;
+  --dash-header-height: 3.5rem;
+  --dash-gap: 1rem;
+  --dash-radius: 0.5rem;
+  --dash-focus: #1d4ed8;
+  --dash-touch-min: 44px;
+}
+
+.dash-shell,
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.dash-sidebar,
+.dashboard-sidebar {
+  width: var(--dash-sidebar-width);
+  flex-shrink: 0;
+}
+
+.dash-main,
+.app-shell-main-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-header,
+.dashboard-header {
+  min-height: var(--dash-header-height);
+  display: flex;
+  align-items: center;
+  gap: var(--dash-gap);
+}
+
+.dash-content,
+.app-shell-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dash-gap);
+  width: auto;
+  margin: 0;
+}
+
+.dash-card-grid,
+.dashboard-home__stats,
+.dashboard-home__panels {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--dash-gap);
+}
+
+@media (min-width: 640px) {
+  .dash-card-grid,
+  .dashboard-home__stats,
+  .dashboard-home__panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .dash-card-grid,
+  .dashboard-home__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.dash-table-wrap,
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dash-nav a,
+.dash-nav button,
+.sidebar-nav a,
+.dash-header button,
+.dashboard-header button {
+  min-height: var(--dash-touch-min);
+  min-width: var(--dash-touch-min);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.dash-nav a:focus-visible,
+.dash-nav button:focus-visible,
+.sidebar-nav a:focus-visible,
+.dash-header a:focus-visible,
+.dash-header button:focus-visible,
+.dashboard-header a:focus-visible,
+.dashboard-header button:focus-visible,
+.dash-content a:focus-visible,
+.dash-content button:focus-visible,
+.app-shell-content a:focus-visible,
+.app-shell-content button:focus-visible {
+  outline: 2px solid var(--dash-focus);
+  outline-offset: 2px;
+}
+
+.dash-menu-toggle {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .dash-shell,
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .dash-menu-toggle {
+    display: inline-flex;
+  }
+
+  .dash-sidebar,
+  .dashboard-sidebar {
+    flex: 0 0 auto;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .dash-shell.nav-open .dash-sidebar,
+  .app-shell.nav-open .dashboard-sidebar,
+  .app-shell.nav-open .dash-sidebar {
+    max-height: 80vh;
+    overflow: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-sidebar,
+  .dashboard-sidebar,
+  .dash-shell * {
+    transition: none !important;
+  }
+}

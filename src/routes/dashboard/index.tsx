@@ -14,7 +14,7 @@ function DashboardHomePage() {
       <p className="sample-data-banner" role="note">
         Demo shell — all figures are placeholders, not live accounts
       </p>
-      <div className="dashboard-home__stats">
+      <div className="dashboard-home__stats dash-card-grid">
         <StatsCard
           label="Total portfolio value"
           value="$300,000"

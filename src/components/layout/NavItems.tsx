@@ -15,7 +15,7 @@ export function NavItems() {
   })
 
   return (
-    <nav className="sidebar-nav" aria-label="Dashboard">
+    <nav className="sidebar-nav dash-nav" aria-label="Dashboard">
       <ul className="nav-list">
         {dashboardNavItems.map((item) => {
           const isActive = isNavItemActive(pathname, item.path)

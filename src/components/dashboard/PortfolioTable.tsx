@@ -51,7 +51,7 @@ export function PortfolioTable({
       {holdings.length === 0 ? (
         <p className="empty-state">{emptyMessage}</p>
       ) : (
-        <div className="table-wrap">
+        <div className="table-wrap dash-table-wrap">
           <table>
             <thead>
               <tr>

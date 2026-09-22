@@ -1,37 +1,40 @@
-import type { ReactNode } from 'react'
-import { Outlet } from '@tanstack/react-router'
+import { useEffect, useState, type ReactNode } from 'react'
+import { Outlet, useRouterState } from '@tanstack/react-router'
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
 import './app-shell.css'
+import '../../styles/dashboard.css'
 
 type AppShellProps = {
   title?: string
   children: ReactNode
 }
 
-/**
- * Shared investor chrome: sidebar + header + main content region.
- *
- * src/routes/dashboard.tsx wires nested pages like this:
- *   import { AppShell } from '../components/layout/AppShell'
- *   return (
- *     <AppShell title="Investor Dashboard">
- *       <Outlet />
- *     </AppShell>
- *   )
- * Portfolio, Deals, and Profile then render inside the same frame.
- */
-export function AppShell({ title, children }: AppShellProps) {
+const SIDEBAR_ID = 'investor-sidebar'
+
+export function AppShell({ children }: AppShellProps) {
+  const [navOpen, setNavOpen] = useState(false)
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
+
+  useEffect(() => {
+    setNavOpen(false)
+  }, [pathname])
+
   return (
-    <div className="app-shell" data-area="dashboard-layout">
-      <Sidebar />
-      <div className="app-shell-main-column">
-        <Header title={title} />
-        <main
-          className="app-shell-content"
-          id="main-content"
-          style={{ padding: '1.5rem 1.75rem 2rem' }}
-        >
+    <div
+      className={navOpen ? 'app-shell dash-shell nav-open' : 'app-shell dash-shell'}
+      data-area="dashboard-layout"
+    >
+      <Sidebar id={SIDEBAR_ID} />
+      <div className="app-shell-main-column dash-main">
+        <Header
+          navOpen={navOpen}
+          onToggleNav={() => setNavOpen((open) => !open)}
+          sidebarId={SIDEBAR_ID}
+        />
+        <main className="app-shell-content dash-content" id="main-content">
           {children}
         </main>
       </div>
@@ -39,7 +42,6 @@ export function AppShell({ title, children }: AppShellProps) {
   )
 }
 
-/** Dashboard layout route: wrap the nested-route Outlet in AppShell. */
 export function DashboardLayout() {
   return (
     <AppShell>
