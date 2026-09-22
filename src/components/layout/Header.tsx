@@ -22,7 +22,14 @@ export function Header({
 
   return (
     <header className="dashboard-header dash-header">
-      <button type="button" className="dash-menu-toggle" aria-label="Open navigation" aria-expanded={navOpen} aria-controls={sidebarId} onClick={onToggleNav}>
+      <button
+        type="button"
+        className="dash-menu-toggle"
+        aria-label="Open navigation"
+        aria-expanded={navOpen}
+        aria-controls={sidebarId}
+        onClick={onToggleNav}
+      >
         <span aria-hidden="true">☰</span>
         Menu
       </button>

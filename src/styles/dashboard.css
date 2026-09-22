@@ -143,7 +143,7 @@
   position: absolute;
   left: 0.75rem;
   top: 0.75rem;
-  z-index: 20;
+  z-index: 30;
   transform: translateY(-160%);
   padding: 0.5rem 0.75rem;
   background: #fff;

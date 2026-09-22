@@ -58,7 +58,7 @@ export function PortfolioTable({
       {holdings.length === 0 ? (
         <p className="empty-state">{emptyMessage}</p>
       ) : (
-        <div className="table-wrap dash-table-wrap" role="region" aria-label="Holdings table">
+        <div className="table-wrap dash-table-wrap" role="region" aria-label="Portfolio holdings table">
           <table>
             <caption className="visually-hidden">
               Portfolio holdings by property
