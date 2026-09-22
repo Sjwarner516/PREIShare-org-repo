@@ -1,7 +1,4 @@
-/* src/styles/dashboard.css
-   Shared responsive + accessibility polish for the PREIshare investor shell.
-   Import this from the root layout or global stylesheet your scaffold already uses.
-*/
+/* src/styles/dashboard.css — loaded by the root layout and global stylesheet. */
 
 :root {
   --dash-sidebar-width: 16rem;
@@ -14,6 +11,7 @@
 
 .dash-shell,
 .app-shell {
+  position: relative;
   display: flex;
   min-height: 100vh;
   width: 100%;
@@ -82,15 +80,43 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.dash-table-wrap table,
+.table-wrap table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+}
+
+.sidebar-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.panel-heading-icon {
+  margin-right: 0.4rem;
+}
+
 .dash-nav a,
 .dash-nav button,
 .sidebar-nav a,
 .dash-header button,
-.dashboard-header button {
+.dashboard-header button,
+.dash-nav-close,
+.dash-icon-btn {
   min-height: var(--dash-touch-min);
   min-width: var(--dash-touch-min);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
 }
@@ -105,13 +131,62 @@
 .dash-content a:focus-visible,
 .dash-content button:focus-visible,
 .app-shell-content a:focus-visible,
-.app-shell-content button:focus-visible {
+.app-shell-content button:focus-visible,
+.dash-nav-close:focus-visible,
+.dash-icon-btn:focus-visible,
+.dash-nav-backdrop:focus-visible {
   outline: 2px solid var(--dash-focus);
   outline-offset: 2px;
 }
 
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 20;
+  transform: translateY(-160%);
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  color: var(--dash-focus);
+  border-radius: var(--dash-radius);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.sidebar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sidebar-brand-mark {
+  font-size: 0.85em;
+}
+
 .dash-menu-toggle {
   display: none;
+}
+
+.dash-nav-close {
+  display: none;
+}
+
+.dash-nav-backdrop {
+  display: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media (max-width: 767px) {
@@ -121,6 +196,10 @@
   }
 
   .dash-menu-toggle {
+    display: inline-flex;
+  }
+
+  .dash-nav-close {
     display: inline-flex;
   }
 
@@ -137,6 +216,23 @@
   .app-shell.nav-open .dash-sidebar {
     max-height: 80vh;
     overflow: auto;
+  }
+
+  .dash-shell.nav-open .dash-nav-backdrop,
+  .app-shell.nav-open .dash-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    border: 0;
+    padding: 0;
+    background: rgba(20, 38, 28, 0.35);
+    z-index: 2;
+  }
+
+  .dash-shell.nav-open .dash-sidebar,
+  .app-shell.nav-open .dashboard-sidebar {
+    position: relative;
+    z-index: 3;
   }
 }
 

@@ -22,14 +22,33 @@ export function AppShell({ children }: AppShellProps) {
     setNavOpen(false)
   }, [pathname])
 
-  return (
-    <div
-      className={
-        navOpen ? 'app-shell dash-shell nav-open' : 'app-shell dash-shell'
+  useEffect(() => {
+    if (!navOpen) return
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setNavOpen(false)
       }
-      data-area="dashboard-layout"
-    >
-      <Sidebar id={SIDEBAR_ID} />
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [navOpen])
+
+  const shellClassName = navOpen
+    ? 'app-shell dash-shell nav-open'
+    : 'app-shell dash-shell'
+
+  return (
+    <div className={shellClassName} data-area="dashboard-layout">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <Sidebar
+        id={SIDEBAR_ID}
+        navOpen={navOpen}
+        onCloseNav={() => setNavOpen(false)}
+      />
       <div className="app-shell-main-column dash-main">
         <Header
           navOpen={navOpen}
@@ -40,6 +59,14 @@ export function AppShell({ children }: AppShellProps) {
           {children}
         </main>
       </div>
+      {navOpen ? (
+        <button
+          type="button"
+          className="dash-nav-backdrop"
+          aria-label="Close navigation"
+          onClick={() => setNavOpen(false)}
+        />
+      ) : null}
     </div>
   )
 }

@@ -42,7 +42,14 @@ export function PortfolioTable({
 }: PortfolioTableProps) {
   return (
     <section className="dashboard-panel" aria-label="Portfolio holdings">
-      <h2>Your holdings</h2>
+      <div className="panel-heading">
+        <h2>
+          <span className="panel-heading-icon" aria-hidden="true">
+            ▦
+          </span>
+          Your holdings
+        </h2>
+      </div>
       {isSampleData ? (
         <p className="sample-data-banner" role="note">
           Sample holdings — placeholders only, not live balances
@@ -51,8 +58,11 @@ export function PortfolioTable({
       {holdings.length === 0 ? (
         <p className="empty-state">{emptyMessage}</p>
       ) : (
-        <div className="table-wrap dash-table-wrap">
+        <div className="table-wrap dash-table-wrap" role="region" aria-label="Holdings table">
           <table>
+            <caption className="visually-hidden">
+              Portfolio holdings by property
+            </caption>
             <thead>
               <tr>
                 <th scope="col">Property</th>
