@@ -14,63 +14,63 @@
 
 ---
 
-## 1. Routing and information architecture
+## 1. Routing and information architecture (R1–R5)
 
 | ID | Check | Status | Evidence |
 |----|--------|--------|----------|
-| R1 | `/dashboard` (or agreed home) loads dashboard home inside AppShell | Pass | Opened `http://127.0.0.1:43123/dashboard` (HTTP 200). AppShell stayed up: sidebar `PREIshare` + Home/Portfolio/Deals/Profile, header title **Dashboard overview**, Menu button, main `#main-content`. Saw three stats (Total portfolio value $300,000, Open deals 3, Profile completeness 80%), Portfolio summary, and Recent activity. |
-| R2 | `/dashboard/portfolio` loads portfolio page shell | Pass | Opened `/dashboard/portfolio` (HTTP 200). Header title **Your portfolio**. Main showed **Your holdings** table: Riverfront Lofts / Cedar Business Park with invested and current values. Sample banner: “Sample holdings — placeholders only, not live balances.” Table wrapped in `dash-table-wrap`. |
-| R3 | `/dashboard/deals` loads deals page shell | Pass | Opened `/dashboard/deals` (HTTP 200). Header title **Open deals**. List showed Harbor View Residences (Tampa, Open), Summit Logistics Hub (Columbus, Closing soon), Oak & Main Retail Strip (Austin, Waitlist), each with a min. investment. Banner: “Sample offerings — not live fundraising.” |
-| R4 | `/dashboard/profile` loads profile page shell | Pass | Opened `/dashboard/profile` (HTTP 200). Header title **Your profile**. Profile card: Name Alex Morgan, Email alex.morgan@example.com, Membership Preferred investor, Preferred contact Email, Notes about Southeast multifamily/industrial. Banner: “Sample member card — not a live account.” |
-| R5 | Unknown paths do not break the whole app (sensible fallback or framework 404) | Pass | Opened `/dashboard/no-such-page` (HTTP 404). AppShell (sidebar + header + Menu) stayed visible. Main showed framework **Not Found**. Did not blank the chrome. |
+| R1 | `/` lands on the starter page and reaches `/dashboard` | Pass | Opened `http://127.0.0.1:43123/` (HTTP 200). Saw `<h1>PREIshare</h1>`, copy “Investor dashboard shell — starter home route.”, and link **Open investor dashboard**. Clicked that link; URL became `http://127.0.0.1:43123/dashboard`. AppShell stayed: sidebar brand `PREIshare` (a `div`, not a link), nav Home/Portfolio/Deals/Profile, header title **Dashboard overview**, **Sample member** chip, main `#main-content`. Home showed three stats ($300,000 / 3 / 80%), Portfolio summary, and Recent activity. |
+| R2 | `/dashboard` and `/dashboard/portfolio` are their own routes with titles | Pass | Reloaded `http://127.0.0.1:43123/dashboard` (HTTP 200): header **Dashboard overview**, Home `aria-current="page"`. Clicked sidebar **Portfolio**; URL `http://127.0.0.1:43123/dashboard/portfolio` (HTTP 200). Header became **Your portfolio**. Main showed **Your holdings** table (Riverfront Lofts Multifamily $50,000 → $56,200 Performing; Cedar Business Park Industrial $75,000 → $74,100 Under review) inside `dash-table-wrap`. Banner: “Sample holdings — placeholders only, not live balances.” |
+| R3 | `/dashboard/deals` is its own route with a title | Pass | Clicked sidebar **Deals** from portfolio. URL `http://127.0.0.1:43123/dashboard/deals` (HTTP 200). Header **Open deals**. List: Harbor View Residences (Tampa, FL · Multifamily, Min. $25,000, Open); Summit Logistics Hub (Columbus, OH · Industrial, Min. $50,000, Closing soon); Oak & Main Retail Strip (Austin, TX · Retail, Min. $15,000, Waitlist). Banner: “Sample offerings — not live fundraising.” AppShell (sidebar + header + main) stayed. |
+| R4 | `/dashboard/profile` is its own route with a title | Pass | Clicked sidebar **Profile**. URL `http://127.0.0.1:43123/dashboard/profile` (HTTP 200). Header **Your profile**. Card fields: Name Alex Morgan, Email alex.morgan@example.com, Membership Preferred investor, Preferred contact Email, Notes about Southeast multifamily/industrial. Banner: “Sample member card — not a live account.” Header chip still read **Sample member**. |
+| R5 | Unknown path keeps the shell and shows a fallback | Pass | Opened `http://127.0.0.1:43123/dashboard/no-such-page` (HTTP 404). Sidebar + header + **Sample member** chip stayed. Header title fell back to **Dashboard overview**. Main showed framework **Not Found**. Chrome did not blank. No fifth investor page exists in the route tree (`/`, four dashboard URLs, and this 404 only). |
 
-**IA notes:** URLs match `docs/dashboard-ia.md` (`/dashboard`, `/dashboard/portfolio`, `/dashboard/deals`, `/dashboard/profile`). Header titles are the `navConfig` titles (Dashboard overview / Your portfolio / Open deals / Your profile), not the one-word nav labels — that is consistent with `navConfig.title`. Sidebar brand is text, not a link; Home is the control that returns to `/dashboard`. No fifth investor page.
+**IA notes:** Paths match `docs/dashboard-ia.md`. Header titles are `navConfig.title` values (Dashboard overview / Your portfolio / Open deals / Your profile), not the one-word nav labels. Sidebar brand **PREIshare** is a `div`, not a link — **Home** is the control that returns to `/dashboard`. That is accepted.
 
 ---
 
-## 2. Navigation labels and active states
+## 2. Navigation labels and active states (N1–N4)
 
 | ID | Check | Status | Evidence |
 |----|--------|--------|----------|
-| N1 | Sidebar/nav labels match brief/IA (Home/Dashboard, Portfolio, Deals, Profile) | Pass | On every investor URL the sidebar listed **Home**, **Portfolio**, **Deals**, **Profile** in that order. Matches IA one-word labels. No Settings, Admin, or Login items. |
-| N2 | Active nav item highlights the current route | Pass | `/dashboard` marked Home `aria-current="page"`. `/dashboard/portfolio` marked Portfolio. `/dashboard/deals` marked Deals. `/dashboard/profile` marked Profile. Home did not stay active on child URLs (exact match on `/dashboard`). |
-| N3 | Header page title updates when changing routes | Pass | Clicked Home → header **Dashboard overview**. Portfolio → **Your portfolio**. Deals → **Open deals**. Profile → **Your profile**. Title always matched `getPageTitle` for that path. |
-| N4 | Nav links use client routing (no full page reload flash if applicable) | Pass | Sidebar items are TanStack `Link`s from `NavItems` / `navConfig` (single list). Changing areas kept AppShell mounted; only the main slot swapped. `/` starter page has “Open investor dashboard” `Link` to `/dashboard`. |
+| N1 | Sidebar labels are Home, Portfolio, Deals, Profile | Pass | On `http://127.0.0.1:43123/dashboard`, `/dashboard/portfolio`, `/dashboard/deals`, and `/dashboard/profile` the sidebar listed **Home**, **Portfolio**, **Deals**, **Profile** in that order. Same four labels appeared in the phone Menu drawer. No Settings, Admin, Login, or Payments items. |
+| N2 | Active nav matches the current URL | Pass | At `/dashboard`, Home had `aria-current="page"` and `nav-link-active`. After clicking Portfolio, only Portfolio was current. Deals and Profile behaved the same. Home did not stay active on child URLs (exact match on `/dashboard`). On `/dashboard/no-such-page` no nav item was current. |
+| N3 | Header title updates when the route changes | Pass | Clicked Home → header **Dashboard overview**. Portfolio → **Your portfolio**. Deals → **Open deals**. Profile → **Your profile**. Titles matched `getPageTitle` for each URL while AppShell stayed mounted. |
+| N4 | Home / brand behavior and client routing | Pass | Clicked sidebar **Home** from Profile; URL returned to `http://127.0.0.1:43123/dashboard` without leaving the shell. Clicked the **PREIshare** brand: it is a `div` (tag=DIV, not a link), so it did not navigate. Home remains the home control. Sidebar items are TanStack `Link`s from one `navConfig` list; only the main slot swapped. |
 
 ---
 
-## 3. Layout shell and responsiveness
+## 3. Layout shell and responsiveness (L1–L5)
 
 | ID | Check | Status | Evidence |
 |----|--------|--------|----------|
-| L1 | AppShell shows sidebar + header + main content on desktop | Pass | At a wide viewport (~1280px CSS: no 767px collapse), `/dashboard` showed left `aside#investor-sidebar` (brand + nav), top header (Menu hidden via `.dash-menu-toggle { display: none }`, title, sample-member chip), and main content to the right. Same chrome on portfolio, deals, and profile. |
-| L2 | Narrow viewport: nav remains usable (collapse, drawer, or stacked pattern) | Pass | `src/styles/dashboard.css` `@media (max-width: 767px)` stacks `.dash-shell` to column, shows the Menu button (`aria-label="Open navigation"`, `aria-expanded`, `aria-controls="investor-sidebar"`), and collapses `.dash-sidebar` to `max-height: 0` until `.nav-open`. Clicking Menu toggles `nav-open` on AppShell and reveals the same Home/Portfolio/Deals/Profile list. Close control and backdrop labeled “Close navigation.” |
-| L3 | No permanent horizontal scroll on home/portfolio/deals/profile at ~375px width | Pass | Core pages use `min-width: 0` on the main column. Home stats use `dash-card-grid` (1 column below 640px). Holdings table sits in `dash-table-wrap` with `overflow-x: auto` so only the table scrolls, not the whole page. Deals and profile are stacked cards/fields. |
-| L4 | Main content remains readable; cards/tables stack or scroll intentionally | Pass | Home: stats 1 → 2 → 3 columns at 640 / 1024. Portfolio: wide table scrolls inside the wrap (min-width 36rem on the table). Deals: card list. Profile: definition list. No overlapping header/nav on the documented breakpoints. |
-| L5 | Basic accessibility: buttons/links are keyboard-focusable; interactive controls have accessible names | Pass | Menu is a real `<button>` with `aria-label="Open navigation"`. Sidebar is `aside` `aria-label="Investor navigation"`. Skip link “Skip to main content.” Close/backdrop buttons use `aria-label="Close navigation"`. Decorative icons use `aria-hidden="true"`. `:focus-visible` outline is 2px on nav and header controls. Sample member chip has `aria-label="Sample member"`. |
+| L1 | Desktop (~1280px): sidebar + header + main | Pass | At 1280×800 on `http://127.0.0.1:43123/dashboard`: left `aside#investor-sidebar` (brand + four nav links), top header (title **Dashboard overview**, **Sample member** chip), main to the right. Menu button computed `display: none` (not visible). Same chrome on portfolio, deals, and profile. Horizontal overflow 0. |
+| L2 | Narrow phone (~375px): Menu toggle; nav usable | Pass | At 375×812 on `http://127.0.0.1:43123/dashboard`: sidebar `display: none` / height 0 (no leftover brand bar). Menu button visible with `aria-label="Open navigation"`. Clicked Menu: `aria-expanded="true"`, `nav-open` on AppShell, drawer showed PREIshare + Home/Portfolio/Deals/Profile + Close. Clicked Portfolio in the drawer; header became **Your portfolio** and the drawer closed. Repeated for Deals and Profile. |
+| L3 | No permanent page-level horizontal scroll on core pages | Pass | After the profile-wrap fix: at 375px, `documentElement.scrollWidth === clientWidth` (375) on Home, Portfolio, Deals, and Profile (overflowX 0). Portfolio table is allowed to scroll inside `dash-table-wrap` only; the page itself does not. First pass had Profile overflowX 43 (email clipped); re-check after stacking fields: email fully visible, overflowX 0. |
+| L4 | Cards/tables stack or scroll intentionally | Pass | Home at 375px: stats stacked in one column (`dash-card-grid`); Portfolio summary rows wrap. Desktop home: three stats in a row, summary + activity side by side. Portfolio table uses `dash-table-wrap`. Deals stay a stacked list. Profile fields stack on the phone breakpoint. No overlapping header/nav after the Menu/sidebar CSS fix. |
+| L5 | Keyboard: Menu and nav links have accessible names | Pass | At `http://127.0.0.1:43123/dashboard` (1280px) Tab order named: **Skip to main content**, **Home**, **Portfolio**, **Deals**, **Profile**, then **Open navigation** (`aria-label` on the Menu button, hidden visually on desktop). At 375px Tab order named: **Skip to main content**, **Close navigation**, **Home**, **Portfolio**, **Deals**, **Profile**, **Open navigation**. Chip has `aria-label="Sample member"`. Focus-visible outline is 2px on those controls. |
 
 ---
 
-## 4. Mock content clarity (demo readiness)
+## 4. Mock content clarity (M1–M5)
 
 | ID | Check | Status | Evidence |
 |----|--------|--------|----------|
-| M1 | Dashboard home: stats cards show labeled mock investor metrics | Pass | `/dashboard` stats: **Total portfolio value** $300,000 (hint Sample total), **Open deals** 3 (Sample count), **Profile completeness** 80% (Sample profile). Page banner: “Demo shell — all figures are placeholders, not live accounts.” |
-| M2 | Portfolio summary / table shows clear placeholder holdings | Pass | Home Portfolio summary: Total (sample) $300,000; Riverside Court 40% $120,000; Harbor Logistics 35% $105,000; cash reserve 25% $75,000; banner “Sample data — placeholders only, not live balances.” Portfolio page table: Riverfront Lofts $50,000 → $56,200 Performing; Cedar Business Park $75,000 → $74,100 Under review; banner “Sample holdings — placeholders only, not live balances.” |
-| M3 | Deals list shows open-deal style placeholders | Pass | `/dashboard/deals`: Harbor View Residences Min. $25,000 Open; Summit Logistics Hub Min. $50,000 Closing soon; Oak & Main Retail Strip Min. $15,000 Waitlist. Banner “Sample offerings — not live fundraising.” No checkout or payment controls. |
-| M4 | Profile card shows member-style placeholder fields | Pass | `/dashboard/profile`: Alex Morgan / alex.morgan@example.com / Preferred investor / Email / Southeast interest note. Banner “Sample member card — not a live account.” No password or sign-in fields. Header also shows a **Sample member** chip (component-plan header placeholder). |
-| M5 | No raw "TODO" / empty broken panels on primary views | Pass | Grepped the four investor URLs: no `TODO`, no empty main. Each primary view had a heading, sample banner, and filled mock rows/fields. |
+| M1 | Home stats are labeled mock investor metrics | Pass | `http://127.0.0.1:43123/dashboard`: banner “Demo shell — all figures are placeholders, not live accounts.” Cards: **Total portfolio value** $300,000 (Sample total), **Open deals** 3 (Sample count), **Profile completeness** 80% (Sample profile). |
+| M2 | Portfolio summary / table are labeled placeholders | Pass | Home Portfolio summary: “Sample data — placeholders only, not live balances”; Total (sample) $300,000; Riverside Court 40% $120,000; Harbor Logistics 35% $105,000; cash reserve 25% $75,000. `/dashboard/portfolio` table banner “Sample holdings — placeholders only, not live balances” with two mock rows. |
+| M3 | Deals list is open-deal style mock content | Pass | `http://127.0.0.1:43123/dashboard/deals`: “Sample offerings — not live fundraising.” Three offerings with location, min. investment, and Open / Closing soon / Waitlist. No checkout or payment controls. |
+| M4 | Profile card is a mock member; header has a sample-member chip | Pass | `http://127.0.0.1:43123/dashboard/profile`: “Sample member card — not a live account.” Name/email/membership/contact/notes placeholders only — no password or sign-in. Header **Sample member** chip (`aria-label="Sample member"`) on all four investor URLs. First HTML pass found empty `header-actions`; chip was added and re-checked. |
+| M5 | No raw TODO or empty broken panels | Pass | Grep of `src/` and the four live URLs: no `TODO`. Each primary view had a heading, sample banner, and filled mock rows/fields. Unknown path is the only empty main, and it shows **Not Found**. |
 
 ---
 
-## 5. Out-of-scope boundaries (must stay deferred)
+## 5. Out-of-scope boundaries (O1–O4)
 
 | ID | Check | Status | Evidence / reason |
 |----|--------|--------|-------------------|
-| O1 | No real authentication / login gate required for shell demo | Deferred | Brief marks sign-in / auth out of scope. All four areas load without a login wall. No login route was added. |
-| O2 | No live Supabase/PostgreSQL data — mock data only | Deferred | Widgets use inline `MOCK_*` constants (`StatsCard` values, `MOCK_HOLDINGS`, `MOCK_DEALS`, `MOCK_PROFILE`). No fetch/Supabase client. Sample banners say data is not live. |
-| O3 | No production deploy required for this verification | Deferred | Walkthrough used the local dev server at `http://127.0.0.1:43123`. Production Hobby URL is a separate Canvas/PAUL concern, not this checklist. |
-| O4 | No payment, document vault, or admin tools added beyond brief | Pass | Nav and routes are only Home, Portfolio, Deals, Profile (plus starter `/` and framework 404). No payments, vault, admin, settings, or notifications screens shipped. |
+| O1 | Real authentication / login gate | Deferred | Brief marks sign-in, auth, and role-based authorization out of scope. All four investor URLs load without a login wall. No login route was added. Missing login is not a Fail. |
+| O2 | Live Supabase / PostgreSQL data | Deferred | Brief requires mock data only. Widgets use inline `MOCK_*` constants. No fetch or Supabase client. Sample banners state the figures are not live. |
+| O3 | Production deploy | Deferred | This verification used the local TanStack Start dev server at `http://127.0.0.1:43123`. Production hosting is not a Sprint 3 shell criterion. |
+| O4 | Payments, document vault, admin tools | Deferred | Brief lists payments, e-sign, admin CRUD, notifications, settings, and vaults as non-goals. Nav and routes are only Home, Portfolio, Deals, Profile (plus starter `/` and framework 404). None of those extra products were required or built. |
 
 ---
 
@@ -78,10 +78,13 @@
 
 | Defect | Severity (blocker / polish) | Resolution | Re-check |
 |--------|----------------------------|------------|----------|
-| Header `header-actions` was empty — `docs/component-plan.md` asks for a simple mock-member placeholder next to the page title | polish | Added a default **Sample member** chip (`aria-label="Sample member"`) in `src/components/layout/Header.tsx` and the colocated `src/styles/dashboard.tsx` Header. Not a live account. | Pass — chip visible on all four investor URLs |
-| Sidebar brand “PREIshare” is not a link | polish (accepted) | IA does not require a logo URL. Home nav lands on `/dashboard`. Left as text brand to avoid a fifth destination. | Pass — documented; Home is the home control |
+| Header `header-actions` was empty — `docs/component-plan.md` requires a simple mock-member placeholder | polish | Default **Sample member** chip (`aria-label="Sample member"`) in `Header` (`src/components/layout/Header.tsx` and colocated `src/styles/dashboard.tsx`). Not a live account. | Pass — chip visible on all four investor URLs at 1280px and 375px |
+| Desktop Menu stayed visible at 1280px because `.dash-header button { display: inline-flex }` beat `.dash-menu-toggle { display: none }` | polish | Raised Menu hide/show specificity in `src/styles/dashboard.css`. | Pass — at 1280×800 Menu `display: none`; sidebar remains the desktop nav |
+| Phone sidebar leaked the PREIshare brand bar when closed (`max-height: 0` lost to flex `min-height: auto`) | polish | Collapsed drawer uses `display: none` until `.nav-open`. | Pass — at 375px closed sidebar height 0; Menu opens the four links |
+| Profile page overflowed 43px at 375px (`alex.morgan@example.com` clipped) | polish | Profile fields wrap/stack in `dashboard-home.css`; `overflow-wrap: anywhere`. | Pass — `/dashboard/profile` at 375px overflowX 0; full email visible |
+| Sidebar brand “PREIshare” is not a link | polish (accepted) | IA does not require a logo URL. Home nav lands on `/dashboard`. Left as a text brand. | Pass — documented; Home is the home control |
 
-No blocker defects. In-scope polish above is fixed or accepted.
+No remaining blocker defects.
 
 ---
 
@@ -91,6 +94,6 @@ No blocker defects. In-scope polish above is fixed or accepted.
 - [x] Deferred items only cover agreed out-of-scope work
 - [x] Shell is demoable against the PREIshare client story for Sprint 3
 
-**Overall result:** Ready for stakeholder handoff
+**Overall result:** Ready
 
-**Verifier signature:** Sydni Warner, 2026-09-22, local walkthrough at http://127.0.0.1:43123
+**Verifier signature:** Sydni Warner, 2026-09-22, browser walkthrough at http://127.0.0.1:43123 (desktop 1280×800 and phone 375×812)
