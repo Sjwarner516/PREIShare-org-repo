@@ -42,7 +42,13 @@ export function Header({
         Menu
       </button>
       <h1 className="header-title">{getPageTitle(pathname)}</h1>
-      <div className="header-actions">{children}</div>
+      <div className="header-actions">
+        {children ?? (
+          <span className="sample-member-chip" aria-label="Sample member">
+            Sample member
+          </span>
+        )}
+      </div>
     </header>
   )
 }
@@ -69,6 +75,7 @@ export function Sidebar({
       aria-label="Investor navigation"
       data-nav-open={navOpen ? 'true' : 'false'}
       data-shell="sidebar"
+      data-landmark="navigation"
     >
       <div className="sidebar-brand-row">
         <div className="sidebar-brand">

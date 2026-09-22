@@ -34,7 +34,13 @@ export function Header({
         Menu
       </button>
       <h1 className="header-title">{getPageTitle(pathname)}</h1>
-      <div className="header-actions">{children}</div>
+      <div className="header-actions">
+        {children ?? (
+          <span className="sample-member-chip" aria-label="Sample member">
+            Sample member
+          </span>
+        )}
+      </div>
     </header>
   )
 }
