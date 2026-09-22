@@ -143,7 +143,7 @@
   position: absolute;
   left: 0.75rem;
   top: 0.75rem;
-  z-index: 30;
+  z-index: 20;
   transform: translateY(-160%);
   padding: 0.5rem 0.75rem;
   background: #fff;
@@ -167,6 +167,18 @@
 
 .dash-menu-toggle {
   display: none;
+}
+
+.dash-menu-toggle[aria-label="Open navigation"],
+.dash-menu-toggle[aria-expanded][aria-controls] {
+  cursor: pointer;
+}
+
+.dash-menu-toggle [aria-hidden="true"],
+.sidebar-brand-mark[aria-hidden="true"],
+.panel-heading-icon[aria-hidden="true"],
+.stats-card__icon[aria-hidden="true"] {
+  line-height: 1;
 }
 
 .dash-nav-close {

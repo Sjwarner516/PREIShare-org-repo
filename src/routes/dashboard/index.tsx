@@ -19,16 +19,19 @@ function DashboardHomePage() {
           label="Total portfolio value"
           value="$300,000"
           hint="Sample total"
+          icon={<span>◆</span>}
         />
         <StatsCard
           label="Open deals"
           value="3"
           hint="Sample count"
+          icon={<span>▣</span>}
         />
         <StatsCard
           label="Profile completeness"
           value="80%"
           hint="Sample profile"
+          icon={<span>●</span>}
         />
       </div>
       <div className="dashboard-home__panels">

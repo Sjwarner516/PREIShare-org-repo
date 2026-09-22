@@ -6,6 +6,7 @@ export const Route = createFileRoute('/dashboard')({
 })
 
 function DashboardLayout() {
+  // AppShell owns Sidebar, Header Menu, and the main landmark.
   return (
     <AppShell>
       <Outlet />

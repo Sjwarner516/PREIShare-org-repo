@@ -1,5 +1,12 @@
 @import '../../styles/dashboard.css';
 
+.dash-menu-toggle {
+  border: 1px solid #d5e0da;
+  background: #fff;
+  border-radius: 0.35rem;
+  font: inherit;
+}
+
 .app-shell {
   display: flex;
   gap: 0;

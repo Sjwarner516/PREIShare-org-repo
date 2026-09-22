@@ -21,7 +21,7 @@ export function Header({
   })
 
   return (
-    <header className="dashboard-header dash-header">
+    <header className="dashboard-header dash-header" data-shell="header">
       <button
         type="button"
         className="dash-menu-toggle"

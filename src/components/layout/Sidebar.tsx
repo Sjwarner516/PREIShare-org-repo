@@ -22,7 +22,7 @@ export function Sidebar({
       className="dashboard-sidebar dash-sidebar"
       aria-label="Investor navigation"
       data-nav-open={navOpen ? 'true' : 'false'}
-      data-sidebar="investor-nav"
+      data-shell="sidebar"
     >
       <div className="sidebar-brand-row">
         <div className="sidebar-brand">

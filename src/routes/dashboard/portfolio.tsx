@@ -6,5 +6,9 @@ export const Route = createFileRoute('/dashboard/portfolio')({
 })
 
 function PortfolioPage() {
-  return <PortfolioTable />
+  return (
+    <div className="dash-table-page">
+      <PortfolioTable />
+    </div>
+  )
 }
