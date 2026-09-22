@@ -97,3 +97,12 @@ No remaining blocker defects.
 **Overall result:** Ready
 
 **Verifier signature:** Sydni Warner, 2026-09-22, browser walkthrough at http://127.0.0.1:43123 (desktop 1280×800 and phone 375×812)
+
+---
+
+## 8. Production ship gate (same Hobby URL as sprint 1)
+
+- **Production URL:** https://prei-share-org-repo-sjwarner516s-projects.vercel.app
+- **GitHub:** https://github.com/Sjwarner516/PREIShare-org-repo (`main`; collaborator `thortek`)
+- **Checked 2026-09-22:** `/`, `/dashboard`, `/dashboard/portfolio`, `/dashboard/deals`, and `/dashboard/profile` each returned HTTP 200 on that Production host (not a Preview URL). Dashboard home showed mock stats and AppShell nav; portfolio/deals/profile showed their mock shells.
+- **Not done:** no second Vercel project; no Preview URL submitted.

@@ -63,6 +63,9 @@ Useful extras that already exist:
 
 There is no test script and no lint script in `package.json`.
 
+**Public Production (same Hobby project as sprint 1, not a Preview):**
+https://prei-share-org-repo-sjwarner516s-projects.vercel.app/dashboard
+
 ## Short demo script
 
 1. Open `/dashboard`. Point at the three stats and say they are **sample
