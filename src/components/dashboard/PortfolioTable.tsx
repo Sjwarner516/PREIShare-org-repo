@@ -1,4 +1,5 @@
 import { formatCurrency } from './formatCurrency'
+import { DashboardTableWrap } from '../../styles/dashboard'
 import './dashboard-home.css'
 
 export type PortfolioHolding = {
@@ -58,11 +59,7 @@ export function PortfolioTable({
       {holdings.length === 0 ? (
         <p className="empty-state">{emptyMessage}</p>
       ) : (
-        <div
-          className="table-wrap dash-table-wrap"
-          role="region"
-          aria-label="Holdings table"
-        >
+        <DashboardTableWrap label="Holdings table">
           <table>
             <caption className="visually-hidden">
               Portfolio holdings by property
@@ -88,7 +85,7 @@ export function PortfolioTable({
               ))}
             </tbody>
           </table>
-        </div>
+        </DashboardTableWrap>
       )}
     </section>
   )

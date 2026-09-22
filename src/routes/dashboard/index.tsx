@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { PortfolioSummary } from '../../components/dashboard/PortfolioSummary'
 import { RecentActivity } from '../../components/dashboard/RecentActivity'
 import { StatsCard } from '../../components/dashboard/StatsCard'
+import { DashboardCardGrid } from '../../styles/dashboard'
 import '../../components/dashboard/dashboard-home.css'
 
 export const Route = createFileRoute('/dashboard/')({
@@ -14,7 +15,7 @@ function DashboardHomePage() {
       <p className="sample-data-banner" role="note">
         Demo shell — all figures are placeholders, not live accounts
       </p>
-      <div className="dashboard-home__stats dash-card-grid">
+      <DashboardCardGrid>
         <StatsCard
           label="Total portfolio value"
           value="$300,000"
@@ -33,7 +34,7 @@ function DashboardHomePage() {
           hint="Sample profile"
           icon={<span>●</span>}
         />
-      </div>
+      </DashboardCardGrid>
       <div className="dashboard-home__panels">
         <PortfolioSummary totalLabel="$300,000" />
         <RecentActivity />

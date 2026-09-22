@@ -23,6 +23,7 @@ export function Sidebar({
       aria-label="Investor navigation"
       data-nav-open={navOpen ? 'true' : 'false'}
       data-shell="sidebar"
+      data-landmark="navigation"
     >
       <div className="sidebar-brand-row">
         <div className="sidebar-brand">

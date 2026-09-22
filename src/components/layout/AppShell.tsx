@@ -40,7 +40,11 @@ export function AppShell({ children }: AppShellProps) {
     : 'app-shell dash-shell'
 
   return (
-    <div className={shellClassName} data-area="dashboard-layout" data-nav-open={navOpen}>
+    <div
+      className={shellClassName}
+      data-area="dashboard-layout"
+      data-nav-open={navOpen}
+    >
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>

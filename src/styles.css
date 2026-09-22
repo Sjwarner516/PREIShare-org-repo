@@ -534,3 +534,7 @@ a {
   margin: 0;
 }
 
+.app-shell.dash-shell.nav-open {
+  z-index: 1;
+}
+
