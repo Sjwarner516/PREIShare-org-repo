@@ -23,18 +23,17 @@ export function Header({
 
   return (
     <header className="dashboard-header dash-header">
-      {onToggleNav ? (
-        <button
-          type="button"
-          className="dash-menu-toggle"
-          aria-expanded={navOpen}
-          aria-controls={sidebarId}
-          aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
-          onClick={onToggleNav}
-        >
-          Menu
-        </button>
-      ) : null}
+      <button
+        type="button"
+        className="dash-menu-toggle"
+        aria-expanded={navOpen}
+        aria-controls={sidebarId}
+        aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
+        onClick={onToggleNav}
+      >
+        <span aria-hidden="true">☰</span>
+        Menu
+      </button>
       <h1 className="header-title">{getPageTitle(pathname)}</h1>
       <div className="header-actions">{children}</div>
     </header>

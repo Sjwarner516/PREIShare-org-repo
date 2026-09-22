@@ -1,3 +1,20 @@
+/*
+  How this file loads (do not remove — the app imports it):
+  import dashboardCss from '../styles/dashboard.css?url'
+  import '../../styles/dashboard.css'
+
+  Header Menu button (toggles .nav-open on .dash-shell):
+  <button type="button" class="dash-menu-toggle"
+    aria-label="Open navigation"
+    aria-expanded="false"
+    aria-controls="investor-sidebar">
+    <span aria-hidden="true">☰</span>
+    Menu
+  </button>
+
+  Tables: wrap with class "table-wrap dash-table-wrap"
+*/
+
 /* Shared responsive + accessibility polish for the PREIshare investor shell. */
 
 :root {
