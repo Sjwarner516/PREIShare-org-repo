@@ -1,72 +1,71 @@
+import './dashboard-home.css'
+
 export type ActivityItem = {
   id: string
   title: string
-  detail: string
-  dateLabel: string
+  detail?: string
+  /** Already-formatted time label for display, e.g. "Mar 18 · 2:04 PM" */
+  timestamp: string
 }
 
 export type RecentActivityProps = {
   title?: string
   items?: ActivityItem[]
-  isSampleData?: boolean
+  emptyMessage?: string
 }
 
-const MOCK_ACTIVITY: ActivityItem[] = [
+/** MOCK PLACEHOLDER — replace with real activity feed later */
+export const MOCK_RECENT_ACTIVITY: ActivityItem[] = [
   {
     id: 'a1',
-    title: 'Distribution posted (sample)',
-    detail: 'Sample multifamily offering — Riverside Court',
-    dateLabel: 'Mar 1, 2026',
+    timestamp: 'Mar 18 · 2:04 PM',
+    title: 'Distribution posted for Riverfront Multifamily',
+    detail: 'Sample distribution — not a live posting',
   },
   {
     id: 'a2',
-    title: 'Capital call notice (sample)',
-    detail: 'Sample industrial note — Harbor Logistics',
-    dateLabel: 'Feb 18, 2026',
+    timestamp: 'Mar 17 · 11:20 AM',
+    title: 'Quarterly report available for Cedar Retail Plaza',
+    detail: 'Sample document notice',
   },
   {
     id: 'a3',
-    title: 'Profile document uploaded (sample)',
-    detail: 'Accreditation letter',
-    dateLabel: 'Feb 5, 2026',
-  },
-  {
-    id: 'a4',
-    title: 'Open deal update (sample)',
-    detail: 'Retail strip — Oak & Main is still under offer',
-    dateLabel: 'Jan 22, 2026',
+    timestamp: 'Mar 15 · 9:00 AM',
+    title: 'Capital call reminder — Harbor Industrial',
+    detail: 'Sample notice',
   },
 ]
 
 export function RecentActivity({
   title = 'Recent activity',
-  items = MOCK_ACTIVITY,
-  isSampleData = true,
+  items = [],
+  emptyMessage = 'No recent activity yet. Sample events will appear here when connected.',
 }: RecentActivityProps) {
   return (
     <section
       className="recent-activity"
       aria-labelledby="recent-activity-heading"
     >
-      <div className="recent-activity__header">
-        <h2 id="recent-activity-heading">{title}</h2>
-        {isSampleData ? (
-          <p className="sample-data-banner" role="note">
-            Sample activity — not connected to a live feed
-          </p>
-        ) : null}
-      </div>
-      <ol className="recent-activity__list">
-        {items.map((item) => (
-          <li key={item.id} className="recent-activity__item">
-            <div className="recent-activity__body">
-              <p className="recent-activity__title">{item.title}</p>
-              <p className="recent-activity__detail">{item.detail}</p>
-            </div>
-            <time className="recent-activity__date">{item.dateLabel}</time>
-          </li>
-        ))}
-      </ol>
+      <h2 id="recent-activity-heading">{title}</h2>
+      {items.length > 0 ? (
+        <ol className="recent-activity__list">
+          {items.map((item) => (
+            <li key={item.id} className="recent-activity__item">
+              <div className="recent-activity__body">
+                <p className="recent-activity__title">{item.title}</p>
+                {item.detail ? (
+                  <p className="recent-activity__detail">{item.detail}</p>
+                ) : null}
+              </div>
+              <time className="recent-activity__date">{item.timestamp}</time>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="empty-state" role="status">
+          {emptyMessage}
+        </p>
+      )}
     </section>
   )
 }
