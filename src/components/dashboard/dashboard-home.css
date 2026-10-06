@@ -17,8 +17,6 @@
 }
 
 .dashboard-home__stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -50,8 +48,6 @@
 }
 
 .dashboard-home__panels {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: 1.25rem;
 }
 
