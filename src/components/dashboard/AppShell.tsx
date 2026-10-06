@@ -1,16 +1,19 @@
 import type { ReactNode } from 'react'
 import { Header } from './Header'
+import { MobileNav } from './MobileNav'
+import { Sidebar } from './Sidebar'
+import { dashboardNavItems } from './navItems'
 
 export type AppShellProps = {
   children: ReactNode
   /** Forwarded to Header */
   title?: string
-  /** Optional sidebar slot — the next step will pass the real Sidebar here */
+  /** Optional sidebar slot — defaults to the shared Sidebar */
   sidebar?: ReactNode
 }
 
 /**
- * Shared frame for all /dashboard routes: header, optional sidebar region, main slot.
+ * Shared frame for all /dashboard routes: header, sidebar, mobile nav, main slot.
  */
 export function AppShell({ children, title, sidebar }: AppShellProps) {
   return (
@@ -18,17 +21,10 @@ export function AppShell({ children, title, sidebar }: AppShellProps) {
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
-      <Header title={title} />
+      <Header title={title} leading={<MobileNav items={dashboardNavItems} />} />
 
       <div className="dash-frame-body">
-        <aside
-          className="dash-sidebar dashboard-sidebar"
-          aria-label="Dashboard sidebar"
-        >
-          {sidebar ?? (
-            <p className="dash-sidebar-placeholder">Navigation coming soon</p>
-          )}
-        </aside>
+        {sidebar ?? <Sidebar items={dashboardNavItems} />}
 
         <main
           className="dash-frame-main app-shell-content dash-content"

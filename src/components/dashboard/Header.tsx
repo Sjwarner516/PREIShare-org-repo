@@ -5,6 +5,8 @@ export type HeaderProps = {
   title?: string
   /** Demo-only label, such as “Sample member” — not real auth state */
   userLabel?: string
+  /** Optional left-side control (mobile menu lives here) */
+  leading?: ReactNode
   /** Optional right-side actions (keep empty for now if unused) */
   actions?: ReactNode
 }
@@ -16,6 +18,7 @@ export type HeaderProps = {
 export function Header({
   title = 'Dashboard',
   userLabel = 'Sample member',
+  leading,
   actions,
 }: HeaderProps) {
   return (
@@ -24,6 +27,7 @@ export function Header({
       role="banner"
       data-shell="header"
     >
+      {leading}
       <div className="header-brand">
         <span className="header-brand-mark" aria-hidden="true">
           P
@@ -43,7 +47,7 @@ export function Header({
           <span className="header-user-initials" aria-hidden="true">
             SM
           </span>
-          <span>{userLabel}</span>
+          <span className="header-user-label">{userLabel}</span>
         </div>
       </div>
     </header>
