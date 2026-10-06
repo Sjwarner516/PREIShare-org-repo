@@ -283,3 +283,88 @@
     transition: none !important;
   }
 }
+
+/* AppShell frame: Header on top, reserved sidebar + main children below. */
+.dash-frame {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background: #f4f7f5;
+}
+
+.dash-frame-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+.dash-frame-main {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  margin: 0;
+}
+
+.dash-sidebar-placeholder {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #c5d4cc;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.header-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 0.4rem;
+  background: #14261c;
+  color: #eef6f1;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.header-brand-text {
+  min-width: 0;
+}
+
+.header-brand-name,
+.header-brand-title {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-brand-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #14261c;
+}
+
+.header-brand-title {
+  font-size: 0.8rem;
+  color: #3d5248;
+}
+
+.header-user-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #14261c;
+}
