@@ -6,6 +6,7 @@ export const Route = createFileRoute('/dashboard')({
 })
 
 function DashboardLayout() {
+  // Child routes (home, portfolio, deals, profile) render through Outlet.
   return (
     <AppShell title="Overview">
       <Outlet />

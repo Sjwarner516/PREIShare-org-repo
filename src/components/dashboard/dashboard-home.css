@@ -7,6 +7,15 @@
   font-size: 0.9rem;
 }
 
+.dashboard-home__intro h2 {
+  margin: 0 0 0.35rem;
+}
+
+.dashboard-home__intro p {
+  margin: 0 0 1.25rem;
+  max-width: 42rem;
+}
+
 .dashboard-home__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
