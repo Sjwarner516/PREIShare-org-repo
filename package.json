@@ -2,13 +2,16 @@
   "name": "preishare-investor-dashboard",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "imports": {
     "#/*": "./src/*"
   },
   "scripts": {
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
-    "build": "tsr generate && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
