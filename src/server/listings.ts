@@ -5,7 +5,7 @@
  * (anon key + sponsor JWT). Do not import the browser client here.
  */
 import { createServerFn } from '@tanstack/react-start'
-import { getSession } from '../lib/auth/session'
+import { getSession } from '../lib/auth/session.server'
 import {
   createListingSchema,
   fieldErrorsFromZod,

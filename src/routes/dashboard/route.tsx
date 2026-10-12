@@ -4,12 +4,11 @@ import {
   clearAuthCookies,
   createBrowserSupabaseClient,
 } from '../../lib/supabase/client'
+import { getCurrentUser } from '../../server/auth'
 
 export const Route = createFileRoute('/dashboard')({
   beforeLoad: async () => {
-    // Dynamic import keeps session.ts / server.ts out of the browser graph.
-    const { getUser } = await import('../../lib/auth/session')
-    const user = await getUser()
+    const user = await getCurrentUser()
     if (!user) {
       throw redirect({ to: '/auth/login' })
     }

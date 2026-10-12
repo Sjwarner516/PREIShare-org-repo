@@ -5,20 +5,42 @@
  *
  * Reads server env names from .env.example / docs/setup/supabase-env-checklist.md:
  *   SUPABASE_URL (fallback VITE_SUPABASE_URL)
+ *   VITE_SUPABASE_ANON_KEY — user-scoped queries + session checks
  *   SUPABASE_SERVICE_ROLE_KEY  — bypasses RLS; never prefix with VITE_
  *
- * Listing create/list in later steps should prefer the user session + anon key
- * + RLS. This helper is for trusted server loaders/actions only.
+ * Listing create/list and session reads use the user JWT + anon key + RLS.
+ * Do not use the service-role key for those paths.
  */
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './types'
 
-export function createServerSupabaseClient(options?: { accessToken?: string }) {
-  const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+function projectUrl() {
+  return process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+}
 
+/** Anon key only. Use with a sponsor JWT so RLS still applies. */
+export function createAnonServerClient() {
+  const url = projectUrl()
+  const anonKey = process.env.VITE_SUPABASE_ANON_KEY
+  if (!url || !anonKey) {
+    throw new Error(
+      'Missing SUPABASE_URL (or VITE_SUPABASE_URL) or VITE_SUPABASE_ANON_KEY. See docs/setup/supabase-env-checklist.md',
+    )
+  }
+
+  return createClient<Database>(url, anonKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  })
+}
+
+export function createServerSupabaseClient(options?: { accessToken?: string }) {
   // User-scoped queries (listings): anon key + the sponsor JWT so RLS applies.
   // Do not use the service-role key for row reads/writes.
   if (options?.accessToken) {
+    const url = projectUrl()
     const anonKey = process.env.VITE_SUPABASE_ANON_KEY
     if (!url || !anonKey) {
       throw new Error(
@@ -37,6 +59,7 @@ export function createServerSupabaseClient(options?: { accessToken?: string }) {
     })
   }
 
+  const url = projectUrl()
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
 
   if (!url || !key) {

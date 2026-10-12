@@ -1,14 +1,13 @@
 /**
- * SERVER-ONLY session helpers.
- * Import from route beforeLoad / server functions only — never from
- * React cards or login/signup forms.
+ * SERVER-ONLY session helpers (`.server.ts` so Vite never ships this to the browser).
+ * Import from `src/server/*.ts` createServerFn handlers only — never from
+ * React cards, login/signup forms, or route modules.
  *
- * Uses createServerSupabaseClient() from src/lib/supabase/server.ts.
- * The user's JWT comes from cookies set after browser sign-in (anon key).
- * This file does not read service-role into the UI.
+ * Session identity uses the sponsor JWT + anon key. This file does not
+ * read the service-role key into the UI or into listing queries.
  */
 import { deleteCookie, getCookie, setCookie } from '@tanstack/react-start/server'
-import { createServerSupabaseClient } from '../supabase/server'
+import { createAnonServerClient } from '../supabase/server'
 import { AUTH_ACCESS_COOKIE, AUTH_REFRESH_COOKIE } from './cookie-names'
 
 export async function getSession() {
@@ -19,7 +18,7 @@ export async function getSession() {
     return null
   }
 
-  const supabase = createServerSupabaseClient()
+  const supabase = createAnonServerClient()
 
   if (accessToken) {
     const { data, error } = await supabase.auth.getUser(accessToken)
@@ -60,8 +59,6 @@ export async function getUser() {
 }
 
 export async function signOut() {
-  const supabase = createServerSupabaseClient()
-  await supabase.auth.signOut()
   deleteCookie(AUTH_ACCESS_COOKIE, { path: '/' })
   deleteCookie(AUTH_REFRESH_COOKIE, { path: '/' })
 }
