@@ -11,3 +11,9 @@ dist-ssr
 .vinxi
 __unconfig*
 todos.json
+
+# Real env files — commit .env.example only (placeholders). Never commit keys.
+.env
+.env.local
+.env.*.local
+!.env.example
