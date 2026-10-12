@@ -542,3 +542,14 @@ a {
   font: inherit;
 }
 
+
+.header-sign-out {
+  margin-right: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid #c5d2ca;
+  border-radius: 999px;
+  background: #fff;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
