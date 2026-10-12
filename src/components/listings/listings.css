@@ -1,0 +1,99 @@
+.listings-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.listings-page header,
+.listings-empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.listings-page h1 {
+  margin: 0;
+}
+
+.listings-page ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listing-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid #d5e0da;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.listing-card h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.listing-card p {
+  margin: 0.2rem 0;
+}
+
+.listing-form {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 36rem;
+}
+
+.listing-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.listing-form input,
+.listing-form select,
+.listing-form textarea {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid #c5d2ca;
+  border-radius: 0.4rem;
+  font: inherit;
+}
+
+.listing-form button {
+  justify-self: start;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: #14261c;
+  color: #eef6f1;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.listing-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.listing-alert {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.4rem;
+  background: #fdecea;
+  color: #8a1f11;
+}
+
+.listing-field-error {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #8a1f11;
+}
+
+.listings-loading {
+  margin: 0;
+}

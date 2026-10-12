@@ -6,6 +6,7 @@ export type DashboardNavItem = {
 /** Single source of truth for Sidebar and MobileNav — matches docs/dashboard-routing-plan.md */
 export const dashboardNavItems: DashboardNavItem[] = [
   { label: 'Home', to: '/dashboard' },
+  { label: 'Listings', to: '/dashboard/listings' },
   { label: 'Portfolio', to: '/dashboard/portfolio' },
   { label: 'Deals', to: '/dashboard/deals' },
   { label: 'Profile', to: '/dashboard/profile' },

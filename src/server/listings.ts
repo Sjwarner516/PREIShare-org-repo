@@ -60,8 +60,9 @@ export const listMyListings = createServerFn({ method: 'GET' }).handler(
 )
 
 /** Action: create a listing owned by the session user — never trust body.owner_id. */
-export const createListing = createServerFn({ method: 'POST' }).handler(
-  async ({ data }): Promise<ListingMutationResult> => {
+export const createListing = createServerFn({ method: 'POST' })
+  .validator((input: unknown) => input)
+  .handler(async ({ data }): Promise<ListingMutationResult> => {
     const session = await requireListingSession()
     if (!session) {
       return { ok: false, error: 'You must be signed in to create a listing.' }
@@ -109,8 +110,9 @@ export const createListing = createServerFn({ method: 'POST' }).handler(
 )
 
 /** Action: update only if the row is visible under RLS for this sponsor. */
-export const updateListing = createServerFn({ method: 'POST' }).handler(
-  async ({ data }): Promise<ListingMutationResult> => {
+export const updateListing = createServerFn({ method: 'POST' })
+  .validator((input: unknown) => input)
+  .handler(async ({ data }): Promise<ListingMutationResult> => {
     const session = await requireListingSession()
     if (!session) {
       return { ok: false, error: 'You must be signed in to update a listing.' }
