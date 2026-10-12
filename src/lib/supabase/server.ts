@@ -13,8 +13,30 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './types'
 
-export function createServerSupabaseClient() {
+export function createServerSupabaseClient(options?: { accessToken?: string }) {
   const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+
+  // User-scoped queries (listings): anon key + the sponsor JWT so RLS applies.
+  // Do not use the service-role key for row reads/writes.
+  if (options?.accessToken) {
+    const anonKey = process.env.VITE_SUPABASE_ANON_KEY
+    if (!url || !anonKey) {
+      throw new Error(
+        'Missing SUPABASE_URL (or VITE_SUPABASE_URL) or VITE_SUPABASE_ANON_KEY. See docs/setup/supabase-env-checklist.md',
+      )
+    }
+
+    return createClient<Database>(url, anonKey, {
+      global: {
+        headers: { Authorization: `Bearer ${options.accessToken}` },
+      },
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    })
+  }
+
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
 
   if (!url || !key) {
