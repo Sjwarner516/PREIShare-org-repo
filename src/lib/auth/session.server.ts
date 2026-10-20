@@ -7,10 +7,36 @@
  * read the service-role key into the UI or into listing queries.
  */
 import { deleteCookie, getCookie, setCookie } from '@tanstack/react-start/server'
+import { createSupabaseServerClient } from '../supabase.server'
 import { createAnonServerClient } from '../supabase/server'
 import { AUTH_ACCESS_COOKIE, AUTH_REFRESH_COOKIE } from './cookie-names'
 
 export async function getSession() {
+  try {
+    const supabase = createSupabaseServerClient({
+      get: (key) => {
+        const value = getCookie(key)
+        return value ? { value } : undefined
+      },
+      set: (key, value) => {
+        setCookie(key, value, { path: '/' })
+      },
+      remove: (key) => {
+        deleteCookie(key, { path: '/' })
+      },
+    })
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (session?.user) {
+      return session
+    }
+  } catch {
+    // Missing env or SSR cookie adapter — fall through to AUTH_ACCESS_COOKIE.
+  }
+
   const accessToken = getCookie(AUTH_ACCESS_COOKIE)
   const refreshToken = getCookie(AUTH_REFRESH_COOKIE)
 

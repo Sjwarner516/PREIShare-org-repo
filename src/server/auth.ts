@@ -1,7 +1,7 @@
 /**
  * Server functions for sponsor session reads.
- * Route modules must call these (RPC) instead of importing session.server.ts,
- * or the client bundle build fails (Vercel Production).
+ * Route modules must call these (RPC) instead of importing supabase.server.ts
+ * into a route file, or the client bundle build fails.
  */
 import { createServerFn } from '@tanstack/react-start'
 import { getUser } from '../lib/auth/session.server'

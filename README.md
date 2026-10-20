@@ -19,8 +19,8 @@ npm run dev
 ```
 
 `npm run dev` runs `vite dev --host 0.0.0.0 --port 43123`. Open
-**http://127.0.0.1:43123/dashboard** (or http://127.0.0.1:43123/ and click
-**Open investor dashboard**).
+**http://127.0.0.1:43123/login** to sign in as a sponsor. Signed-out visits to
+`/dashboard` redirect to `/login`.
 
 Other scripts that exist in `package.json`:
 
@@ -37,7 +37,8 @@ There is no `test` or `lint` script.
 
 | Path | What you should see |
 |------|---------------------|
-| `/dashboard` | Stats, portfolio summary, recent activity (mock) |
+| `/login` | Sponsor email/password sign-in. Success goes to `/dashboard`. |
+| `/dashboard` | Session-gated layout. Signed-out visitors are sent to `/login`. |
 | `/dashboard/portfolio` | Holdings table (mock) |
 | `/dashboard/deals` | Open offerings list (mock) |
 | `/dashboard/profile` | Member card (mock) |
@@ -54,6 +55,7 @@ There is no `test` or `lint` script.
 ## Project notes
 
 - File-based routes live under `src/routes/`. `__root.tsx` is the document
-  shell; `dashboard.tsx` wraps investor pages in `AppShell`.
+  shell; `src/routes/login.tsx` is sponsor sign-in; `src/routes/dashboard.tsx`
+  wraps investor pages in `AppShell` and checks the session on the server.
 - `app.config.ts` re-exports the Vite/TanStack Start config (`vite.config.ts`).
 - Listing types from earlier work still live in `src/types/`.
