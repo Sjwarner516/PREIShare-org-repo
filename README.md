@@ -39,6 +39,8 @@ There is no `test` or `lint` script.
 |------|---------------------|
 | `/login` | Sponsor email/password sign-in. Success goes to `/dashboard`. |
 | `/dashboard` | Session-gated layout. Signed-out visitors are sent to `/login`. |
+| `/dashboard/properties` | The signed-in sponsor’s `properties` rows (RLS). |
+| `/dashboard/properties/new` | Create a draft listing. `owner_id` comes from the session. |
 | `/dashboard/portfolio` | Holdings table (mock) |
 | `/dashboard/deals` | Open offerings list (mock) |
 | `/dashboard/profile` | Member card (mock) |

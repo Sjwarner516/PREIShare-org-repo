@@ -8,7 +8,7 @@
 | Item | Value |
 | --- | --- |
 | GitHub repository (you can push) | `https://github.com/Sjwarner516/PREIShare-org-repo` |
-| Instructor collaborator | `thortek` added: yes (write invite sent 2026-09-06; pending accept) |
+| Instructor collaborator | `thortek` added: yes (write) |
 | Vercel Production URL | `https://prei-share-org-repo-sjwarner516s-projects.vercel.app` |
 | Preview URLs | Do **not** submit these to Canvas |
 

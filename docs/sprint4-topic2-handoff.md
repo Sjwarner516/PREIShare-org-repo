@@ -56,11 +56,11 @@ Schema SQL that implements the matrix: `supabase/migrations/20250321000000_spons
 - `src/lib/supabase.server.ts` — server-only clients (session/RLS vs service-role escape hatch)
 - `src/lib/auth/session.server.ts` — server session read from cookies / JWT
 - `src/server/auth.ts` — `getCurrentUser` server function used by the dashboard guard
-- `src/server/properties.ts` — property **list** loader (`listMyProperties`)
+- `src/server/properties.ts` — `listMyProperties` and `createProperty` (session check, `owner_id` from `getUser()`, insert errors return `error.message`)
 - `src/routes/login.tsx` — sponsor email/password login
 - `src/routes/dashboard.tsx` — session-aware dashboard layout
 - `src/routes/dashboard/properties.tsx` — protected property list
-- `src/routes/dashboard/properties.new.tsx` — create form + `createProperty` (sets `owner_id` from `getUser()`)
+- `src/routes/dashboard/properties.new.tsx` — create form only; calls the server `createProperty` function
 - `supabase/migrations/20250321000000_sponsors_properties_rls.sql` — schema + RLS
 - `.env.example` — placeholder env names only
 
