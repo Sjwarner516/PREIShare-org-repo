@@ -7,6 +7,7 @@ export type DashboardNavItem = {
 export const dashboardNavItems: DashboardNavItem[] = [
   { label: 'Home', to: '/dashboard' },
   { label: 'Listings', to: '/dashboard/listings' },
+  { label: 'Properties', to: '/dashboard/properties' },
   { label: 'Portfolio', to: '/dashboard/portfolio' },
   { label: 'Deals', to: '/dashboard/deals' },
   { label: 'Profile', to: '/dashboard/profile' },
