@@ -1,4 +1,4 @@
-import { createFileRoute, isRedirect } from '@tanstack/react-router'
+import { Link, createFileRoute, isRedirect } from '@tanstack/react-router'
 import '../../components/listings/listings.css'
 import {
   listMyProperties,
@@ -41,6 +41,7 @@ function PropertiesPage() {
         <p className="listing-alert" role="alert">
           {error}
         </p>
+        <Link to="/dashboard/properties/new">Add property</Link>
       </section>
     )
   }
@@ -59,6 +60,7 @@ function PropertiesPage() {
             enforced by the database (row-level security), not only this page.
           </p>
         </div>
+        <Link to="/dashboard/properties/new">Add property</Link>
       </section>
     )
   }
@@ -66,11 +68,14 @@ function PropertiesPage() {
   return (
     <section className="listings-page" aria-labelledby="properties-heading">
       <header>
-        <h1 id="properties-heading">Your properties</h1>
-        <p>
-          Visibility is enforced by the database (row-level security), not only
-          this page.
-        </p>
+        <div>
+          <h1 id="properties-heading">Your properties</h1>
+          <p>
+            Visibility is enforced by the database (row-level security), not only
+            this page.
+          </p>
+        </div>
+        <Link to="/dashboard/properties/new">Add property</Link>
       </header>
       <ul>
         {properties.map((property) => (
