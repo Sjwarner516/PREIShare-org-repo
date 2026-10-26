@@ -7,7 +7,8 @@ const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     tanstackStart(),
-    nitro(process.env.VERCEL ? { preset: 'vercel' } : {}),
+    // Official TanStack Start on Vercel: nitro() immediately after tanstackStart().
+    nitro(),
     viteReact(),
   ],
 })
