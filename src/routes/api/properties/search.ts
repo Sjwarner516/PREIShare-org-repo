@@ -53,6 +53,13 @@ export const Route = createFileRoute('/api/properties/search')({
           return Response.json({ query, results })
         } catch (err) {
           console.error('property search failed', err)
+          const code =
+            typeof err === 'object' && err !== null && 'code' in err
+              ? String((err as { code: unknown }).code)
+              : ''
+          if (code === 'MISSING_API_KEY') {
+            return publicError(503, 'Search is not configured')
+          }
           return publicError(500, 'Search failed')
         }
       },

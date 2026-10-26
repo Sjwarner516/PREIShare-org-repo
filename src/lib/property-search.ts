@@ -22,6 +22,16 @@ export type PropertyMatch = {
   similarity: number
 }
 
+export class PropertySearchError extends Error {
+  readonly code: string
+
+  constructor(code: string, message: string) {
+    super(message)
+    this.name = 'PropertySearchError'
+    this.code = code
+  }
+}
+
 const DEFAULT_MATCH_COUNT = 5
 const MAX_MATCH_COUNT = 50
 
@@ -43,7 +53,8 @@ export async function searchPropertiesByText(
   const result = await generateEmbedding(trimmed)
 
   if (!result.ok) {
-    throw new Error(
+    throw new PropertySearchError(
+      result.code,
       `Query embedding failed (${result.code}): ${result.message}`,
     )
   }
@@ -64,7 +75,10 @@ export async function searchPropertiesByText(
   })
 
   if (error) {
-    throw new Error(`match_properties failed: ${error.message}`)
+    throw new PropertySearchError(
+      'RPC_ERROR',
+      `match_properties failed: ${error.message}`,
+    )
   }
 
   return (data ?? []) as PropertyMatch[]
