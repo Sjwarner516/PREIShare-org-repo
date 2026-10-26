@@ -1,0 +1,61 @@
+{
+  "_comment": "Sample PREIshare listings for semantic-search demos. Field names match public.properties in supabase/migrations/20250315000000_enable_pgvector_properties.sql (id, title, description, city, status). owner_id and embedding are filled by the seed script. Descriptions are written so later queries have obvious winners and losers; they avoid copying the buyer’s distinctive words.",
+  "properties": [
+    {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "title": "Cedar hideaway beside a private lake",
+      "description": "Serene cottage tucked among pines with a dock and a kayak launch at the shoreline. Saturday-to-Sunday guests fill the calendars in summer, and the road never carries highway noise. Strong occupancy from people who want a still overnight stay, not a party house.",
+      "city": "Lakeview",
+      "status": "published"
+    },
+    {
+      "id": "22222222-2222-4222-8222-222222222222",
+      "title": "Open loft above late-night venues",
+      "description": "Industrial-glass unit stacked over bars and music rooms that run past midnight. Street traffic, neon, and crowd noise are part of the address. Aimed at investors who want young professionals chasing city energy, not a restful getaway.",
+      "city": "Minneapolis",
+      "status": "published"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333333",
+      "title": "Three-bed house on a leafy cul-de-sac",
+      "description": "A roomy residential house with a fenced backyard and a short walk to the elementary campus and playground. Built for households with children who need a quiet street and long-term tenancy, not weekend guests or vacation turnover.",
+      "city": "Eden Prairie",
+      "status": "published"
+    },
+    {
+      "id": "44444444-4444-4444-8444-444444444444",
+      "title": "Sunlit loft in the core business district",
+      "description": "Urban open-plan flat with dining on the block and offices a few minutes on foot. No car needed for weeknight meals or a transit commute. This is city living for people who want food, nightlife, and a job center at sidewalk distance.",
+      "city": "Minneapolis",
+      "status": "published"
+    },
+    {
+      "id": "55555555-5555-4555-8555-555555555555",
+      "title": "Eighty acres of tiled cropland",
+      "description": "Level irrigated fields with center-pivot coverage, drainage tile, and a history of corn and soybean rotations. This is working agricultural ground for row crops, not a house, lodging stay, or downtown unit.",
+      "city": "Jackson",
+      "status": "published"
+    },
+    {
+      "id": "66666666-6666-4666-8666-666666666666",
+      "title": "Renovated duplex with month-to-month tenants",
+      "description": "Two-unit building leased to working adults on conventional residential terms. Cash flow comes from steady monthly yield, not Saturday-to-Sunday guest stays. No dock, no shoreline, and no vacation calendar.",
+      "city": "St. Paul",
+      "status": "published"
+    },
+    {
+      "id": "77777777-7777-4777-8777-777777777777",
+      "title": "Four-bedroom house near the district campus",
+      "description": "Spacious suburban house on a low-traffic street, close to the middle school and a neighborhood park. Long-term demand from families who want bedrooms, a yard, and a school-year routine rather than short-term occupancy.",
+      "city": "Plymouth",
+      "status": "published"
+    },
+    {
+      "id": "88888888-8888-4888-8888-888888888888",
+      "title": "Warehouse bay beside the freight corridor",
+      "description": "Clear-span industrial shell with dock-high loading and overnight truck traffic. Built for storage and light assembly, not people sleeping over or raising children. Meaning is logistics and square footage, not lodging or a lakeshore stay.",
+      "city": "Roseville",
+      "status": "published"
+    }
+  ]
+}

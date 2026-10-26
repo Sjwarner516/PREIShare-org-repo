@@ -190,3 +190,6 @@ async function callEmbeddingProvider(
   }
   return embedding
 }
+
+/** Seed/search alias — same contract as generatePropertyEmbedding. */
+export const generateEmbedding = generatePropertyEmbedding
