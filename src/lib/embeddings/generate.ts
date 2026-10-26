@@ -67,27 +67,7 @@ function isMockEnabled(): boolean {
   return flag === '1' || flag === 'true' || flag === 'yes'
 }
 
-/**
- * Generate an embedding for property title + description.
- * Empty title or empty description is EMPTY_INPUT (data model: both are required
- * for a searchable listing). Missing EMBEDDING_API_KEY is MISSING_API_KEY unless
- * EMBEDDING_MOCK=1 (offline practice vector of length 1536).
- */
-export async function generatePropertyEmbedding(
-  input: PropertyEmbeddingInput,
-): Promise<EmbeddingResult> {
-  const title = input.title.trim()
-  const description = input.description.trim()
-  if (!title || !description) {
-    return {
-      ok: false,
-      code: 'EMPTY_INPUT',
-      message:
-        'Title and description are both required to embed a listing. Empty description is not searchable.',
-    }
-  }
-
-  const text = buildEmbeddingText(input)
+async function embedText(text: string): Promise<EmbeddingResult> {
   const model = process.env.EMBEDDING_MODEL?.trim() || DEFAULT_MODEL
 
   if (isMockEnabled()) {
@@ -136,6 +116,57 @@ export async function generatePropertyEmbedding(
     const message = err instanceof Error ? err.message : 'Unknown provider error'
     return { ok: false, code: 'PROVIDER_ERROR', message }
   }
+}
+
+/**
+ * Generate an embedding for property title + description.
+ * Empty title or empty description is EMPTY_INPUT (data model: both are required
+ * for a searchable listing). Missing EMBEDDING_API_KEY is MISSING_API_KEY unless
+ * EMBEDDING_MOCK=1 (offline practice vector of length 1536).
+ */
+export async function generatePropertyEmbedding(
+  input: PropertyEmbeddingInput,
+): Promise<EmbeddingResult> {
+  const title = input.title.trim()
+  const description = input.description.trim()
+  if (!title || !description) {
+    return {
+      ok: false,
+      code: 'EMPTY_INPUT',
+      message:
+        'Title and description are both required to embed a listing. Empty description is not searchable.',
+    }
+  }
+
+  return embedText(buildEmbeddingText(input))
+}
+
+/**
+ * Embed a buyer query as typed (not the listing `{title}\n\n{description}` recipe).
+ * Same model and dimension 1536 as stored property vectors.
+ */
+export async function generateQueryEmbedding(
+  query: string,
+): Promise<EmbeddingResult> {
+  const text = query.trim()
+  if (!text) {
+    return {
+      ok: false,
+      code: 'EMPTY_INPUT',
+      message: 'Search query is empty; nothing to embed.',
+    }
+  }
+  return embedText(text)
+}
+
+/** Listings pass { title, description }; search passes the raw query string. */
+export async function generateEmbedding(
+  input: PropertyEmbeddingInput | string,
+): Promise<EmbeddingResult> {
+  if (typeof input === 'string') {
+    return generateQueryEmbedding(input)
+  }
+  return generatePropertyEmbedding(input)
 }
 
 /** Offline practice only — not a real meaning vector. Length is 1536. */
@@ -190,6 +221,3 @@ async function callEmbeddingProvider(
   }
   return embedding
 }
-
-/** Seed/search alias — same contract as generatePropertyEmbedding. */
-export const generateEmbedding = generatePropertyEmbedding
