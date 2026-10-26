@@ -6,7 +6,7 @@ Software-ready design for **property listings** and their **embedding vectors**.
 
 This doc is the contract for later pgvector migrations, TypeScript types, seed/backfill, and similarity search. It is **not SQL** and **not application code**. If a later prompt would add tables or fields listed under Out of scope, cut it.
 
-**My scratch list before drafting:** (a) each searchable property needs `id`, `title`, `description`, optional `city`, and timestamps already used on PREIshare listings; (b) the vector is built from **title + description** only; (c) the embedding is a **fixed-length list of numbers** stored in its **own** column; (d) that length is **`DIMENSION_TODO`** until a later step picks a model.
+**My scratch list before drafting:** (a) each searchable property needs `id`, `title`, `description`, optional `city`, and timestamps already used on PREIshare listings; (b) the vector is built from **title + description** only; (c) the embedding is a **fixed-length list of numbers** stored in its **own** column; (d) that length is **1536** (locked in `supabase/migrations/20250315000000_enable_pgvector_properties.sql`; TypeScript must use the same size).
 
 ---
 
@@ -79,7 +79,7 @@ Rules:
 - Do **not** embed `id`, `city`, `status`, `owner_id`, timestamps, or prices as if they were narrative meaning.
 - Store **raw** `title` and `description` unchanged. The vector is a **derived** column. Re-embed overwrites the vector only; it must not wipe the listing text.
 
-**Query embedding input:** the buyer’s search string as typed (for example `quiet cabin near water with good rental upside`). Same **model** and **`DIMENSION_TODO`** as listing vectors. The query is **not** forced through the `{title}\n\n{description}` recipe because it is not a listing.
+**Query embedding input:** the buyer’s search string as typed (for example `quiet cabin near water with good rental upside`). Same **model** and **dimension 1536** as listing vectors. The query is **not** forced through the `{title}\n\n{description}` recipe because it is not a listing.
 
 ---
 
@@ -87,20 +87,20 @@ Rules:
 
 | Field | Type (logical) | Required | Notes |
 | --- | --- | --- | --- |
-| embedding | vector(**DIMENSION_TODO**) | **yes after backfill** for any row that may appear in semantic search | One vector per property in this tutorial. Same length for every stored row **and** every query embedding. |
+| embedding | vector(**1536**) | **yes after backfill** for any row that may appear in semantic search | One vector per property in this tutorial. Same length for every stored row **and** every query embedding. |
 
-### Dimension placeholder
+### Dimension (locked)
 
-- The only size name in this contract is **`DIMENSION_TODO`**.
-- A later step chooses the embedding model and replaces **`DIMENSION_TODO`** with **one** integer everywhere (this doc, migration, TypeScript types) in a **single pass**.
-- Until then, do not write a second size in another section. Query vectors and stored vectors must use the **same model and same dimension**. Mixed lengths break insert or search (see embeddings + vector-search notes).
+- The only size in this contract is **1536** (`vector(1536)` in the pgvector migration).
+- Query vectors and stored vectors must use the **same model and 1536**. Mixed lengths break insert or search.
+- Do not silently change only SQL or only TypeScript; both must stay 1536.
 
 ### Nullability and backfill lifecycle
 
 1. **Create listing text** — `title` + `description` (and other scalars) exist on the row.
 2. **Generate embedding** — outside the database (TypeScript / model API). Input = canonical string above.
 3. **Store vector** — write `embedding` on that same property row.
-4. **Eligible for semantic search** — only when `embedding` is **non-null** and has length **`DIMENSION_TODO`**.
+4. **Eligible for semantic search** — only when `embedding` is **non-null** and has length **1536**.
 
 Temporary null: `embedding` may be null **only** between insert-text and embed (or if embed failed and we have not retried). After seed/backfill, **every searchable sample property has a non-null embedding**. A null embedding is omitted from ranking, not treated as “close to everything.”
 
@@ -127,7 +127,7 @@ Do **not** replace `description` with the vector. The UI needs text; ranking nee
 - One `properties` table (or equivalent existing listing table) with `id`, listing fields above, and `embedding`
 - **One** embedding per property for this tutorial
 - Explicit embedding input recipe (`title` + `description`)
-- One dimension placeholder: **`DIMENSION_TODO`**
+- One embedding dimension: **1536**
 - Sample seed set large enough for the requirements queries (cabin/water rental, family/schools, downtown walkable, farmland **control**)
 
 **Out of scope (do not model yet)**
@@ -147,10 +147,10 @@ Do **not** replace `description` with the vector. The UI needs text; ranking nee
 - [x] Every field has a clear purpose tied to requirements (search demo + existing listing identity)
 - [x] Primary key defined (`id`)
 - [x] Embedding input text recipe is explicit (`{title}\n\n{description}`)
-- [x] Single dimension placeholder used consistently (**`DIMENSION_TODO`** only)
+- [x] Single dimension used consistently (**1536** only)
 - [x] Raw text and vector are separate
 - [x] Null rules for embedding are stated (temporary during insert-then-embed; required after backfill for search)
-- [x] Query embeddings must match stored embeddings in model and **`DIMENSION_TODO`**
+- [x] Query embeddings must match stored embeddings in model and **1536**
 - [x] Out-of-scope items are listed so a later agent does not invent them
 
 If someone embeds **only the title** while this doc says title + description, that is a **fail** at review.
@@ -159,7 +159,7 @@ If someone embeds **only the title** while this doc says title + description, th
 
 ## Open questions
 
-- Exact embedding **model name** and the integer that will replace **`DIMENSION_TODO`**
+- Exact embedding **model name** (dimension is locked at **1536**)
 - Final SQL similarity / distance **operator** (align with `docs/vector-search-learner-notes.md`; cosine is the reminder, not locked)
 - Whether demo seed `city` values are filled (optional field; not in the embedding recipe)
 - How sample seed rows relate to existing `owner_id` NOT NULL on live `properties` (pgvector plan / seed step; **not** a new users table)
@@ -171,4 +171,4 @@ If someone embeds **only the title** while this doc says title + description, th
 
 Next: plan Supabase pgvector enablement and migration **order** using this doc as the schema contract (`docs/pgvector-setup-plan.md`). That later file may name types and extensions. It must not change the embedding recipe or invent a second dimension.
 
-**Contract in one breath:** one property row, human text in `title`/`description`, meaning in `embedding vector(DIMENSION_TODO)` built from `{title}\n\n{description}`, same size for every query.
+**Contract in one breath:** one property row, human text in `title`/`description`, meaning in `embedding vector(1536)` built from `{title}\n\n{description}`, same size for every query.
