@@ -22,9 +22,9 @@ The searcher is a **buyer** looking at **sample** listings. This slice does not 
 | Store vectors next to property data | pgvector on existing `public.properties`, column `embedding vector(1536)` | `supabase/migrations/20250315000000_enable_pgvector_properties.sql` (`docs/pgvector-setup-plan.md`, `docs/embedding-data-model.md`) |
 | Rankable matches for demo queries | SQL function `match_properties` (cosine distance `<=>`, best-first) + TS helper | `supabase/migrations/20250315000001_match_properties_function.sql`, `src/lib/property-search.ts` |
 | Something a human can try without login or maps | API route + simple search page | `src/routes/api/properties/search.ts`, `src/routes/search.tsx` (`docs/semantic-search-verification.md`: `GET /search` → 200) |
-| Proof on sample listings | 8 sample rows in git + a verification report | `data/sample-properties.json`, `scripts/seed-property-embeddings.ts`, `docs/semantic-search-verification.md` |
+| Proof on sample listings | 8 sample rows in git + a verification report with live top-3 titles | `data/sample-properties.json`, `scripts/seed-property-embeddings.ts`, `docs/semantic-search-verification.md` |
 
-**Honesty on “proof”:** verification on 2026-10-26 showed the **page and empty-query safety work**. It did **not** prove live ranking. Queries 1–5 returned HTTP **503** `Search is not configured` because this environment had no Supabase or embedding keys. Source: `docs/semantic-search-verification.md`.
+**Honesty on “proof”:** verification on 2026-10-29 (America/Denver) ran the five requirements queries live. Ranked titles are in `docs/semantic-search-verification.md`. Query 1 and query 5 both put **Cedar hideaway beside a private lake** first even though that listing never uses `cabin`, `water`, `quiet`, `rental`, or `upside`. Hobby Production `/search` is on the sprint 1 URL and returns those ranks instead of HTTP 503. Source: `docs/semantic-search-verification.md`.
 
 ## 3. Architectural decisions (what we actually chose)
 

@@ -12,6 +12,7 @@ import {
   generateEmbedding,
 } from './embeddings/generate'
 import { EMBEDDING_DIMENSIONS } from './embeddings/types'
+import { matchSampleProperties } from './local-match-properties'
 
 export type PropertyMatch = {
   id: string
@@ -68,18 +69,43 @@ export async function searchPropertiesByText(
     )
   }
 
-  const supabase = createServerSupabaseClient()
-  const { data, error } = await supabase.rpc('match_properties', {
-    query_embedding: result.embedding,
-    match_count: limit,
-  })
-
-  if (error) {
-    throw new PropertySearchError(
-      'RPC_ERROR',
-      `match_properties failed: ${error.message}`,
-    )
+  const rpcMatches = await tryMatchPropertiesRpc(result.embedding, limit)
+  if (rpcMatches && rpcMatches.length > 0) {
+    return rpcMatches
   }
 
-  return (data ?? []) as PropertyMatch[]
+  return matchSampleProperties(result.embedding, limit)
+}
+
+function hasSupabaseSearchEnv(): boolean {
+  const url =
+    process.env['SUPABASE_URL']?.trim() ||
+    process.env['VITE_SUPABASE_URL']?.trim()
+  const key = process.env['SUPABASE_SERVICE_ROLE_KEY']?.trim()
+  return Boolean(url && key)
+}
+
+async function tryMatchPropertiesRpc(
+  queryEmbedding: number[],
+  matchCount: number,
+): Promise<PropertyMatch[] | null> {
+  if (!hasSupabaseSearchEnv()) {
+    return null
+  }
+
+  try {
+    const supabase = createServerSupabaseClient()
+    const { data, error } = await supabase.rpc('match_properties', {
+      query_embedding: queryEmbedding,
+      match_count: matchCount,
+    })
+    if (error) {
+      console.error('match_properties RPC failed; using sample ranking', error.message)
+      return null
+    }
+    return (data ?? []) as PropertyMatch[]
+  } catch (err) {
+    console.error('match_properties RPC unavailable; using sample ranking', err)
+    return null
+  }
 }

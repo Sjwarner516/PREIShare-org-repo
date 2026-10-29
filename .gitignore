@@ -4,6 +4,9 @@ dist
 dist-ssr
 *.local
 .env
+.env.local
+.env.*.local
+!.env.example
 .nitro
 .tanstack
 .wrangler
@@ -11,14 +14,5 @@ dist-ssr
 .vinxi
 __unconfig*
 todos.json
-<<<<<<< HEAD
-
-# Real env files — commit .env.example only (placeholders). Never commit keys.
-.env
-.env.local
-.env.*.local
-!.env.example
-=======
 .vercel/output
 .vercel/*.log
->>>>>>> 5b02c22 (Fix Hobby Production adapter to official Nitro + existing project.)

@@ -14,7 +14,8 @@
     "start": "vite preview --host 0.0.0.0 --port 43123",
     "generate-routes": "tsr generate",
     "typecheck": "tsc --noEmit",
-    "seed:embeddings": "npx tsx scripts/seed-property-embeddings.ts"
+    "seed:embeddings": "npx tsx scripts/seed-property-embeddings.ts",
+    "verify:search": "npx tsx scripts/verify-semantic-search.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

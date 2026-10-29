@@ -8,6 +8,7 @@ import {
   type EmbeddingResult,
   type PropertyEmbeddingInput,
 } from './types'
+import { LOCAL_EMBEDDING_MODEL, localSemanticEmbedding } from './local'
 
 const DEFAULT_MODEL = 'text-embedding-3-small'
 const DEFAULT_API_URL = 'https://api.openai.com/v1/embeddings'
@@ -62,56 +63,55 @@ export function embeddingDimensionSelfCheck(): {
   }
 }
 
+function envFlag(name: string): string | undefined {
+  // Dynamic key so Vite does not replace process.env.NAME with undefined at build.
+  return process.env[name]?.trim()
+}
+
 function isMockEnabled(): boolean {
-  const flag = process.env.EMBEDDING_MOCK?.trim().toLowerCase()
+  const flag = envFlag('EMBEDDING_MOCK')?.toLowerCase()
   return flag === '1' || flag === 'true' || flag === 'yes'
 }
 
-async function embedText(text: string): Promise<EmbeddingResult> {
-  const model = process.env.EMBEDDING_MODEL?.trim() || DEFAULT_MODEL
-
-  if (isMockEnabled()) {
-    const embedding = mockEmbedding(text)
-    if (!assertEmbeddingDimension(embedding)) {
-      return {
-        ok: false,
-        code: 'DIMENSION_MISMATCH',
-        message: `Expected ${EMBEDDING_DIMENSIONS} numbers, got ${embedding.length}.`,
-      }
-    }
-    return {
-      ok: true,
-      embedding,
-      model: `mock:${model}`,
-      dimensions: embedding.length,
-    }
-  }
-
-  const apiKey = process.env.EMBEDDING_API_KEY?.trim()
-  if (!apiKey) {
+function asEmbeddingSuccess(
+  embedding: number[],
+  model: string,
+): EmbeddingResult {
+  if (!assertEmbeddingDimension(embedding)) {
     return {
       ok: false,
-      code: 'MISSING_API_KEY',
-      message:
-        'Set EMBEDDING_API_KEY in your environment before generating embeddings.',
+      code: 'DIMENSION_MISMATCH',
+      message: `Expected ${EMBEDDING_DIMENSIONS} numbers, got ${embedding.length}.`,
     }
+  }
+  return {
+    ok: true,
+    embedding,
+    model,
+    dimensions: embedding.length,
+  }
+}
+
+function localMeaningEmbedding(text: string): EmbeddingResult {
+  return asEmbeddingSuccess(localSemanticEmbedding(text), LOCAL_EMBEDDING_MODEL)
+}
+
+async function embedText(text: string): Promise<EmbeddingResult> {
+  const model = envFlag('EMBEDDING_MODEL') || DEFAULT_MODEL
+
+  if (isMockEnabled()) {
+    return asEmbeddingSuccess(mockEmbedding(text), `mock:${model}`)
+  }
+
+  const apiKey = envFlag('EMBEDDING_API_KEY')
+  if (!apiKey) {
+    // Hobby / classroom fallback: real meaning vector, not a dummy sine wave.
+    return localMeaningEmbedding(text)
   }
 
   try {
     const embedding = await callEmbeddingProvider(text, apiKey, model)
-    if (!assertEmbeddingDimension(embedding)) {
-      return {
-        ok: false,
-        code: 'DIMENSION_MISMATCH',
-        message: `Expected ${EMBEDDING_DIMENSIONS} numbers, got ${embedding.length}.`,
-      }
-    }
-    return {
-      ok: true,
-      embedding,
-      model,
-      dimensions: embedding.length,
-    }
+    return asEmbeddingSuccess(embedding, model)
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown provider error'
     return { ok: false, code: 'PROVIDER_ERROR', message }
@@ -121,8 +121,9 @@ async function embedText(text: string): Promise<EmbeddingResult> {
 /**
  * Generate an embedding for property title + description.
  * Empty title or empty description is EMPTY_INPUT (data model: both are required
- * for a searchable listing). Missing EMBEDDING_API_KEY is MISSING_API_KEY unless
- * EMBEDDING_MOCK=1 (offline practice vector of length 1536).
+ * for a searchable listing). Missing EMBEDDING_API_KEY uses the local 1536-d
+ * meaning embedding (synonym groups + hashed unigrams). EMBEDDING_MOCK=1 is
+ * the dummy sine vector and must not be used to judge ranking.
  */
 export async function generatePropertyEmbedding(
   input: PropertyEmbeddingInput,
@@ -187,7 +188,7 @@ async function callEmbeddingProvider(
   apiKey: string,
   model: string,
 ): Promise<number[]> {
-  const url = process.env.EMBEDDING_API_URL?.trim() || DEFAULT_API_URL
+  const url = envFlag('EMBEDDING_API_URL') || DEFAULT_API_URL
   const response = await fetch(url, {
     method: 'POST',
     headers: {

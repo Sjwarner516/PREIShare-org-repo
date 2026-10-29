@@ -64,58 +64,82 @@ function PropertySearchPage() {
   }
 
   return (
-    <main>
-      <p>
-        <Link to="/">Home</Link>
-      </p>
-      <h1>PREIshare property search</h1>
-      <p>
-        Describe the kind of investment property you want. We match meaning, not
-        only exact words — for example a peaceful lakeside stay with guest
-        income, a family house near schools, or a loft you can walk to dinner.
-      </p>
-
-      <form onSubmit={onSubmit}>
-        <label htmlFor="q">Search</label>
-        <input
-          id="q"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="quiet cabin near water with good rental upside"
-          autoComplete="off"
-          style={{ display: 'block', width: '100%', margin: '0.5rem 0' }}
-        />
-        <button type="submit" disabled={status === 'loading'}>
-          {status === 'loading' ? 'Searching…' : 'Search'}
-        </button>
-      </form>
-
-      {status === 'loading' ? <p>Searching sample listings…</p> : null}
-
-      {errorMessage ? <p role="alert">{errorMessage}</p> : null}
-
-      {status === 'done' && results.length === 0 && !errorMessage ? (
-        <p>
-          No matching properties yet. Try a different intent from the sample
-          set, such as “family-friendly home close to good schools”.
+    <main className="page-wrap px-4 py-10 sm:py-12">
+      <section className="island-shell rounded-2xl p-6 sm:p-8">
+        <p className="island-kicker mb-2">
+          <Link to="/" className="text-[var(--sea-ink-soft)] no-underline">
+            Home
+          </Link>
+          {' / '}
+          Search
         </p>
-      ) : null}
+        <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
+          PREIshare property search
+        </h1>
+        <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
+          Describe the kind of investment property you want. We match meaning,
+          not only exact words — for example a peaceful lakeside stay with guest
+          income, a family house near schools, or a loft you can walk to dinner.
+        </p>
 
-      {results.length > 0 ? (
-        <ol>
-          {results.map((r) => (
-            <li key={r.id} style={{ marginBottom: '1rem' }}>
-              <strong>{r.title}</strong>
-              {r.city ? <div>{r.city}</div> : null}
-              <div>{snippet(r.description ?? '')}</div>
-              <div>
-                Similarity:{' '}
-                {typeof r.similarity === 'number' ? r.similarity.toFixed(3) : '—'}
-              </div>
-            </li>
-          ))}
-        </ol>
-      ) : null}
+        <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
+          <label htmlFor="q" className="text-sm font-semibold text-[var(--sea-ink)]">
+            Search
+          </label>
+          <input
+            id="q"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="quiet cabin near water with good rental upside"
+            autoComplete="off"
+            className="w-full rounded-xl border border-[var(--line)] bg-[var(--chip-bg)] px-3 py-2.5 text-base text-[var(--sea-ink)] outline-none ring-[var(--sea-ink)] focus:ring-2"
+          />
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            className="w-fit rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-4 py-2 text-sm font-semibold text-[var(--sea-ink)] disabled:opacity-60"
+          >
+            {status === 'loading' ? 'Searching…' : 'Search'}
+          </button>
+        </form>
+
+        {status === 'loading' ? (
+          <p className="mt-4 text-[var(--sea-ink-soft)]">Searching sample listings…</p>
+        ) : null}
+
+        {errorMessage ? (
+          <p role="alert" className="mt-4 text-red-700">
+            {errorMessage}
+          </p>
+        ) : null}
+
+        {status === 'done' && results.length === 0 && !errorMessage ? (
+          <p className="mt-4 text-[var(--sea-ink-soft)]">
+            No matching properties yet. Try a different intent from the sample
+            set, such as “family-friendly home close to good schools”.
+          </p>
+        ) : null}
+
+        {results.length > 0 ? (
+          <ol className="mt-6 list-decimal space-y-4 pl-5">
+            {results.map((r) => (
+              <li key={r.id} className="text-[var(--sea-ink)]">
+                <strong>{r.title}</strong>
+                {r.city ? (
+                  <div className="text-sm text-[var(--sea-ink-soft)]">{r.city}</div>
+                ) : null}
+                <div className="text-[var(--sea-ink-soft)]">
+                  {snippet(r.description ?? '')}
+                </div>
+                <div className="text-sm">
+                  Similarity:{' '}
+                  {typeof r.similarity === 'number' ? r.similarity.toFixed(3) : '—'}
+                </div>
+              </li>
+            ))}
+          </ol>
+        ) : null}
+      </section>
     </main>
   )
 }

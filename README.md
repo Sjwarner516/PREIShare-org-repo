@@ -19,8 +19,19 @@ npm run dev
 ```
 
 `npm run dev` runs `vite dev --host 0.0.0.0 --port 43123`. Open
+**http://127.0.0.1:43123/search** for meaning-aware sample search, or
 **http://127.0.0.1:43123/login** to sign in as a sponsor. Signed-out visits to
 `/dashboard` redirect to `/login`.
+
+## Live URLs (Sprint 5 submission)
+
+| What | URL |
+|------|-----|
+| GitHub (fork `main`) | https://github.com/Sjwarner516/PREIShare-org-repo |
+| Vercel Production | https://prei-share-org-repo-sjwarner516s-projects.vercel.app |
+| Live search | https://prei-share-org-repo-sjwarner516s-projects.vercel.app/search |
+
+Collaborator **thortek** is on the GitHub fork. Do not create a second Vercel app; this is the existing Hobby Production host from sprint 1.
 
 Other scripts that exist in `package.json`:
 
@@ -44,6 +55,7 @@ There is no `test` or `lint` script.
 | `/dashboard/portfolio` | Holdings table (mock) |
 | `/dashboard/deals` | Open offerings list (mock) |
 | `/dashboard/profile` | Member card (mock) |
+| `/search` | Semantic sample-property search (no login) |
 
 ## Docs
 
