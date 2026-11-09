@@ -28,7 +28,7 @@ Buckets B and C).
 2. Paste **one** prompt below into your assistant.
 3. Attach or paste the relevant diff hunks (and file paths) the prompt asks for.
 4. Read the answer as **advice only**. You still leave the GitHub review and
-   decide merge.
+   decide merge. Do not paste the assistant’s last paragraph into **Approve**.
 5. Never paste production secrets, `.env` / `.env.local` values, service-role
    keys, embedding API keys, or live credentials into the assistant. File
    **names** and env **names** are enough.
@@ -115,7 +115,7 @@ appears in the diff):
   production deploy from a PR)
 
 For each flag output:
-- Severity: high | medium | low
+- Severity: high | medium | low (a label for the human, not a ship / no-ship score)
 - File and rough location (observed in diff)
 - Why it matters for PREIshare sponsors, buyers, or listing data
 - A concrete question the human reviewer should ask
@@ -123,10 +123,13 @@ For each flag output:
 
 Hard rules:
 - Do not approve, LGTM, or merge. Do not say the code is safe.
+- Never write "you may merge", "safe to ship", or "do not merge" — merge is a human decision.
 - If unsure, mark needs human verification.
 - Prefer questions over verdicts.
 - Do not request secrets or .env contents.
 - Do not claim CI is green unless I paste the check run.
+- End the entire reply with exactly this line and nothing after it:
+  Decision: advisory only — no merge recommendation
 
 Diff:
 <PASTE DIFF OR FILE HUNKS HERE>
