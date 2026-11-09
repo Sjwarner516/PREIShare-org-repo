@@ -202,7 +202,7 @@ async function callEmbeddingProvider(
     }),
   })
 
-  let body: ProviderResponse = {}
+  let body: ProviderResponse
   try {
     body = (await response.json()) as ProviderResponse
   } catch {

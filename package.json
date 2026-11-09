@@ -14,6 +14,8 @@
     "start": "vite preview --host 0.0.0.0 --port 43123",
     "generate-routes": "tsr generate",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
     "seed:embeddings": "npx tsx scripts/seed-property-embeddings.ts",
     "verify:search": "npx tsx scripts/verify-semantic-search.ts"
   },
@@ -33,13 +35,17 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tanstack/router-cli": "^1.132.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.14.0",
     "tsx": "^4.23.15",
     "typescript": "^5.7.0",
-    "vite": "^8.0.0"
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.0.0",
+    "vitest": "^5.1.0"
   }
 }

@@ -1,6 +1,6 @@
 # .github/workflows/pr-ci.yml
-# Install, typecheck, then build. Lint/test come later (scripts MISSING).
-# Script names from docs/ci/project-ci-inventory.md / package.json.
+# Install → typecheck → build → lint → test.
+# Script names match package.json (see docs/ci/ci-scripts-notes.md).
 
 name: PR CI
 
@@ -11,7 +11,7 @@ on:
 
 jobs:
   ci:
-    name: Typecheck and build
+    name: Quality checks
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -31,3 +31,10 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
