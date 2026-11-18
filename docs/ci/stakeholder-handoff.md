@@ -142,3 +142,87 @@ Prioritize follow-ups that improve trust without inventing deploy or live-databa
 ## 9. One-paragraph executive summary
 
 PREIshare pull requests are now wired to run an automated install → typecheck → build → lint → test job named **Quality checks** (workflow **PR CI**), so broken changes should fail in public instead of only on a teammate’s laptop. That job does not deploy, does not talk to live Supabase, and does not approve the product. AI-assisted prompts can speed review, but merge decisions, secret handling, and product judgment stay with humans. Admins still need to enable branch protection using the checklist — it is **not** on today — and the next work should be a real PR run, required checks on `main`, and the coverage and doc-drift gaps listed above.
+
+---
+
+## Topic 2: AI review overlay on the finished CI gate
+
+The topic 1 record above stays in force. Continuous integration is already done. The GitHub Actions workflow at `.github/workflows/pr-ci.yml` already installs, typechecks, builds, lints, and tests on pull requests. This section does not rebuild that workflow, the prompt pack, or the live site. It tells stakeholders how human review sits on top of that finished gate.
+
+### What the AI review can and cannot do
+
+The AI review can:
+
+- Suggest findings on a pull request, in the required output shape from the system instruction.
+- Help a human reviewer look faster. It is an advisor only.
+
+The AI review cannot:
+
+- Approve a pull request.
+- Merge a pull request.
+- Replace a human decision about sign-in, money, privacy, or product intent.
+- Count as a required GitHub status check or a required reviewer.
+
+A green CI check is evidence the commands passed. It is not permission to merge.
+
+### Where to read the overlay
+
+Do not look for a second handoff file. Start with the overview, then open the piece you need.
+
+| Piece | Path | What a stakeholder uses it for |
+| --- | --- | --- |
+| Overlay overview | `docs/ci/ai-review-overlay-brief.md` | Why this review layer exists |
+| Who may approve and who may merge | `docs/ci/pr-approval-roles.md` | Humans only (`thortek` approves; Sydni Warner merges); the AI is an advisor |
+| System instruction and output shape | `docs/ci/ai-pr-review-prompts.md` | How the AI must answer |
+| Human-judgment checklist | `docs/ci/human-judgment-checklist.md` | Sign-in, money, privacy, and product intent |
+| Review runbook | `docs/ci/ai-review-orchestration.md` | The same sequence every time |
+| Sample critique and prompt revision | `docs/ci/sample-pr-review/critique-and-prompt-revision.md` | What the practice review taught us |
+| Branch-protection record | `docs/ci/branch-protection-checklist.md` | What GitHub actually saved |
+| Practice sample | `docs/ci/samples/README.md` | The planted privacy sample; not app code |
+
+### Branch protection: enforced now versus only documented
+
+Copied from `docs/ci/branch-protection-checklist.md`. This handoff does not change GitHub settings.
+
+#### Enforced on this repository now
+
+- None. The enforcement record states that no branch-protection rule saved. `main` still returned Branch not protected. An empty ruleset list is not Active protection.
+
+#### Documented but not enforced on this plan
+
+- Require a pull request before merging (`main`). Result: not attempted; not enforced.
+- Human approvals before merge (count **1**; approver `thortek`). The AI assistant is not an approver. Result: not attempted; not enforced.
+- Required status check **Quality checks** from `.github/workflows/pr-ci.yml`. Result: not shown; not enforced.
+- Limit who may merge to Sydni Warner after that approval and a green pr-ci check. Result: could not set; not enforced.
+
+The AI assistant is not a required approver and is not a required status check.
+
+### Sample privacy pull request
+
+The practice pull request with one planted privacy mistake was not merged. The practice files stay under `docs/ci/samples/` for learning. They are not live member-facing code. Sprint 7 must not merge that sample.
+
+### Decision log: why humans remain the approvers
+
+Approval and merge stay with the humans named in the roles file. A passing CI run cannot judge these four risks. The AI may comment. A person must decide.
+
+| Risk | Why a human must decide | Artifact that supports the person |
+| --- | --- | --- |
+| Sign-in | A change can pass tests and still let the wrong person into the dashboard, or show one member another member's data after login. | Roles file and human-judgment checklist |
+| Money | A passing test can still change a price, balance, or refund a sponsor should not trust. An AI comment may not accept that. | Human-judgment checklist |
+| Privacy | The practice review planted a privacy mistake on purpose. A human compared the AI notes to the snippet with the checklist. The sample was not merged. | Checklist and critique file |
+| Product intent | A change can typecheck and still drift from what PREIshare is for: helping people make better real-estate decisions. | Overlay brief and checklist |
+
+### Sprint 7 next actions
+
+These items are already done and working. Do not list them as missing, unbuilt, or work to create.
+
+- The pull-request CI workflow is done and running. Do not rebuild `.github/workflows/pr-ci.yml`.
+- The AI review prompt pack, which is the system instruction, is done. Do not treat `docs/ci/ai-pr-review-prompts.md` as unwritten.
+- The existing Production site is already live on the current Vercel Hobby project. Do not create a new hosting project. Later confirmation uses that same public URL.
+- Keep merge decisions with the humans named in the roles file. The AI remains an advisor.
+- On future pull requests, follow the runbook and the human checklist.
+- If the GitHub plan later allows a rule that is only documented today, apply it from the branch-protection checklist. Until then, leave that honest gap recorded. The gap does not mean CI was never built.
+
+### What stakeholders should remember
+
+The automatic checks stay required evidence. The person who approves is still a person. The sample privacy change was not merged.
