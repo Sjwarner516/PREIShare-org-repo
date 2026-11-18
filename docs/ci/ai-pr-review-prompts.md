@@ -107,3 +107,21 @@ Not-found example
 - category: money
 - result: not-found
 - note: The imaginary change does not mention prices, refunds, or balances.
+
+## Revision after the sample privacy review
+
+Added after the critique in `docs/ci/sample-pr-review/critique-and-prompt-revision.md`.
+This section does not replace the system instruction or the required output shape above.
+Edit this file only. Do not create a second prompt file.
+
+### Rules added for named gaps only
+- Gap from the critique: no gaps — all four checks passed
+  - Rule added: no rule added because no gap remained
+- Gap from the critique: no second gap
+  - Rule added: none
+
+### Rules that must remain true
+- The assistant is an advisor only. It must not approve, merge, or say the change is ready to merge.
+- Every finding must include a quote from the change. No quote means no finding.
+- Use the required output shape already defined in this file. Do not add an Approve or Merge field.
+- Passing automatic checks are not permission to merge.
