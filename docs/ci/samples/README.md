@@ -18,15 +18,15 @@ No app routes, no Supabase files, and no change to `.github/workflows/pr-ci.yml`
 
 ## Pull request record
 
-- Pull request URL: REPLACE_WITH_YOUR_PULL_REQUEST_URL
+- Pull request URL: https://github.com/Sjwarner516/PREIShare-org-repo/pull/1
 - Status: open
 - Merged: no
 
 ## CI record
 
 - Workflow file: `.github/workflows/pr-ci.yml`
-- Result: REPLACE_WITH_passed_OR_failed_OR_did_not_start
-- Actions run URL: REPLACE_WITH_ACTIONS_RUN_URL_OR_checks_note
+- Result: passed
+- Actions run URL: https://github.com/Sjwarner516/PREIShare-org-repo/actions/runs/44390093422
 
 ## Human learner note — do not paste this section into the AI review
 
